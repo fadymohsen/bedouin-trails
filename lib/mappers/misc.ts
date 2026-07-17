@@ -18,22 +18,29 @@ export function mapSliderForHero(slider: SliderLike, locale: Locale): HeroSlide 
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type I18nJson = Record<string, string> | any;
+
 type BlogLike = {
   id: number;
   slug: string;
   titleEn: string;
   titleAr: string;
+  titleI18n?: I18nJson;
   excerptEn: string | null;
   excerptAr: string | null;
+  excerptI18n?: I18nJson;
   contentEn: string;
   contentAr: string;
+  contentI18n?: I18nJson;
   image: string | null;
 };
 
 export function mapBlogForHomeSection(blog: BlogLike, locale: Locale) {
-  const title = localize(blog.titleEn, blog.titleAr, locale);
+  const title = localize(blog.titleEn, blog.titleAr, locale, blog.titleI18n);
   const rawDescription =
-    localize(blog.excerptEn ?? "", blog.excerptAr, locale) || localize(blog.contentEn, blog.contentAr, locale);
+    localize(blog.excerptEn ?? "", blog.excerptAr, locale, blog.excerptI18n) ||
+    localize(blog.contentEn, blog.contentAr, locale, blog.contentI18n);
   const description = rawDescription.replace(/<[^>]*>/g, "").slice(0, 200);
 
   return {

@@ -7,14 +7,26 @@ import styles from "./blogs.module.scss";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
 
-type BlogListItem = { id: number; slug: string; titleEn: string; titleAr: string };
-type BlogFaqItem = { id: number; questionEn: string; questionAr: string; answerEn: string; answerAr: string };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type I18nJson = Record<string, string> | any;
+type BlogListItem = { id: number; slug: string; titleEn: string; titleAr: string; titleI18n?: I18nJson };
+type BlogFaqItem = {
+  id: number;
+  questionEn: string;
+  questionAr: string;
+  questionI18n?: I18nJson;
+  answerEn: string;
+  answerAr: string;
+  answerI18n?: I18nJson;
+};
 type BlogDetail = {
   slug: string;
   titleEn: string;
   titleAr: string;
+  titleI18n?: I18nJson;
   contentEn: string;
   contentAr: string;
+  contentI18n?: I18nJson;
   image: string | null;
   faqs?: BlogFaqItem[];
 };
@@ -30,8 +42,8 @@ export default function BlogLayout({
   locale: Locale;
   t: (key: string) => string;
 }) {
-  const currentTitle = localize(current.titleEn, current.titleAr, locale);
-  const currentContent = localize(current.contentEn, current.contentAr, locale);
+  const currentTitle = localize(current.titleEn, current.titleAr, locale, current.titleI18n);
+  const currentContent = localize(current.contentEn, current.contentAr, locale, current.contentI18n);
   const currentUrl = `${SITE_URL}/blogs/${current.slug}`;
 
   const jsonLd = {
@@ -70,7 +82,7 @@ export default function BlogLayout({
               className={`${styles["link-item"]} ${current.slug === blog.slug ? styles.active : ""}`}
             >
               <span className={styles.bullet} />
-              <span className={styles.title}>{localize(blog.titleEn, blog.titleAr, locale)}</span>
+              <span className={styles.title}>{localize(blog.titleEn, blog.titleAr, locale, blog.titleI18n)}</span>
               <span className={styles.arrow} />
             </Link>
           ))}
@@ -92,8 +104,8 @@ export default function BlogLayout({
               <h2>{t("faq")}</h2>
               {current.faqs.map((faq) => (
                 <div key={faq.id} style={{ marginBottom: 20 }}>
-                  <h3 style={{ margin: "0 0 8px" }}>{localize(faq.questionEn, faq.questionAr, locale)}</h3>
-                  <p>{localize(faq.answerEn, faq.answerAr, locale)}</p>
+                  <h3 style={{ margin: "0 0 8px" }}>{localize(faq.questionEn, faq.questionAr, locale, faq.questionI18n)}</h3>
+                  <p>{localize(faq.answerEn, faq.answerAr, locale, faq.answerI18n)}</p>
                 </div>
               ))}
             </div>

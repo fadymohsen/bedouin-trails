@@ -232,14 +232,19 @@ model Blog {
   slug                String    @unique
   titleEn             String    @map("title_en")
   titleAr             String    @map("title_ar")
+  titleI18n           Json?     @map("title_i18n")
   contentEn           String    @db.Text @map("content_en")
   contentAr           String    @db.Text @map("content_ar")
+  contentI18n         Json?     @map("content_i18n")
   excerptEn           String?   @db.Text @map("excerpt_en")
   excerptAr           String?   @db.Text @map("excerpt_ar")
+  excerptI18n         Json?     @map("excerpt_i18n")
   metaTitleEn         String?   @map("meta_title_en")
   metaTitleAr         String?   @map("meta_title_ar")
+  metaTitleI18n       Json?     @map("meta_title_i18n")
   metaDescriptionEn   String?   @db.Text @map("meta_description_en")
   metaDescriptionAr   String?   @db.Text @map("meta_description_ar")
+  metaDescriptionI18n Json?     @map("meta_description_i18n")
   image               String?
   author              String    @default("Bedouin Trails Team")
   category            String?
@@ -258,15 +263,17 @@ model Blog {
 }
 
 model BlogFaq {
-  id          Int      @id @default(autoincrement())
-  blogId      Int      @map("blog_id")
-  questionEn  String   @map("question_en")
-  questionAr  String   @map("question_ar")
-  answerEn    String   @db.Text @map("answer_en")
-  answerAr    String   @db.Text @map("answer_ar")
-  sortOrder   Int      @default(0) @map("sort_order")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id            Int      @id @default(autoincrement())
+  blogId        Int      @map("blog_id")
+  questionEn    String   @map("question_en")
+  questionAr    String   @map("question_ar")
+  questionI18n  Json?    @map("question_i18n")
+  answerEn      String   @db.Text @map("answer_en")
+  answerAr      String   @db.Text @map("answer_ar")
+  answerI18n    Json?    @map("answer_i18n")
+  sortOrder     Int      @default(0) @map("sort_order")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
 
