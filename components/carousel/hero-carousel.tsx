@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { FaArrowRight } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import styles from "./carousel.module.scss";

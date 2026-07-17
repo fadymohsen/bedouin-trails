@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { FaStar } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import type { TripCardData } from "@/lib/mappers/trap";

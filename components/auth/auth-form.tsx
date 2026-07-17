@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/lib/i18n/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaChevronLeft, FaChevronDown } from "react-icons/fa";
 import LanguageSwitcher from "@/components/language-switcher/language-switcher";

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link } from "@/lib/i18n/navigation";
+import { usePathname } from "@/lib/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FaBars } from "react-icons/fa";

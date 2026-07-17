@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { FaGlobe, FaTimes } from "react-icons/fa";
-import { setLocaleAction } from "@/lib/i18n/actions";
+import { useRouter, usePathname } from "@/lib/i18n/navigation";
 import { locales, type Locale } from "@/lib/i18n/config";
 import styles from "./language-switcher.module.scss";
 
@@ -14,7 +13,7 @@ const LANGUAGE_META: Record<Locale, { nativeName: string; flag: string }> = {
   pt: { nativeName: "Português", flag: "br" },
   zh: { nativeName: "中文", flag: "cn" },
   es: { nativeName: "Español", flag: "es" },
-  sv: { nativeName: "Svenska", flag: "se" },
+  nl: { nativeName: "Nederlands", flag: "nl" },
   it: { nativeName: "Italiano", flag: "it" },
   de: { nativeName: "Deutsch", flag: "de" },
   fr: { nativeName: "Français", flag: "fr" },
@@ -23,6 +22,7 @@ const LANGUAGE_META: Record<Locale, { nativeName: string; flag: string }> = {
 export default function LanguageSwitcher() {
   const activeLocale = useLocale();
   const router = useRouter();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [, startTransition] = useTransition();
 
@@ -41,9 +41,8 @@ export default function LanguageSwitcher() {
 
   function handleLanguageChange(lang: Locale) {
     setIsOpen(false);
-    startTransition(async () => {
-      await setLocaleAction(lang);
-      router.refresh();
+    startTransition(() => {
+      router.replace(pathname, { locale: lang });
     });
   }
 

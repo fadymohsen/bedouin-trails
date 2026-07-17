@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/lib/i18n/navigation";
 import { localize } from "@/lib/i18n/localized";
 import type { Locale } from "@/lib/i18n/config";
 import Breadcrumbs from "@/components/breadcrumbs/breadcrumbs";
