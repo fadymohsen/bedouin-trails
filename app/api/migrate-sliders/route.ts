@@ -81,7 +81,7 @@ export async function GET(req: Request) {
     if (changed) {
       await prisma.slider.update({
         where: { id: slider.id },
-        data: { descriptionI18n: newDescI18n, titleI18n: newTitleI18n },
+        data: { descriptionI18n: newDescI18n ?? undefined, titleI18n: newTitleI18n ?? undefined },
       });
       log.push(`JSON i18n updated for slider #${slider.id}`);
     }
