@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import Breadcrumbs from "@/components/breadcrumbs/breadcrumbs";
 import styles from "@/components/guides/guides.module.scss";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 const PATH = "/camel-trek";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: t("guide_camel_title"),
     description: t("guide_camel_meta_desc"),
     keywords: t("guide_camel_meta_keywords"),
-    alternates: { canonical: url,  },
+    alternates: buildAlternates(PATH),
     openGraph: {
       title: t("guide_camel_og_title"),
       description: t("guide_camel_og_desc"),

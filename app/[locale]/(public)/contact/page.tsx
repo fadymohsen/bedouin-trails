@@ -6,7 +6,7 @@ import PageHero from "@/components/page-hero/page-hero";
 import ContactForm from "@/components/contact/contact-form";
 import styles from "@/components/contact/contact.module.scss";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const url = `${SITE_URL}/contact`;
   return {
     title, description,
-    alternates: { canonical: url },
+    alternates: buildAlternates("/contact"),
     openGraph: { title, description, url, images: [`${SITE_URL}/og-image.jpg`] },
     twitter: { card: "summary_large_image", title, description, images: [`${SITE_URL}/og-image.jpg`] },
   };
@@ -24,8 +24,25 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ContactPage() {
   const t = await getTranslations();
 
+  const contactJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: t("meta_title_contact"),
+    description: t("meta_desc_contact"),
+    url: `${SITE_URL}/contact`,
+    mainEntity: {
+      "@type": "TravelAgency",
+      name: "Bedouin Trails",
+      url: SITE_URL,
+      telephone: "+20-10-02717380",
+      email: "info@bedouintrails.com",
+      address: { "@type": "PostalAddress", addressCountry: "EG", addressLocality: "Cairo" },
+    },
+  };
+
   return (
     <div className={styles.contactPage}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }} />
       <PageHero title={t("contact_hero_title")} image="/img/contact-bg.webp" eyebrow={t("contact")} />
 
       <div className={styles.grid}>

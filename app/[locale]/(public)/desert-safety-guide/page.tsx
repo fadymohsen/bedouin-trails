@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import Breadcrumbs from "@/components/breadcrumbs/breadcrumbs";
 import styles from "@/components/guides/guides.module.scss";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 const PATH = "/desert-safety-guide";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t("guide_safety_meta_desc"),
     keywords:
       "desert safety Egypt, White Desert safety, Egypt desert tour safety, desert survival tips, desert camping safety, Western Desert Egypt safety, safari safety tips, desert first aid, desert travel advice",
-    alternates: { canonical: url,  },
+    alternates: buildAlternates(PATH),
     openGraph: {
       title: t("guide_safety_og_title"),
       description: t("guide_safety_og_desc"),
@@ -37,6 +37,13 @@ export default async function DesertSafetyPage() {
 
   return (
     <div className={styles["guide-page"]}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org", "@type": "Article",
+        headline: t("guide_safety_h1"), description: t("guide_safety_meta_desc"),
+        url, image: `${SITE_URL}/og-image.jpg`,
+        publisher: { "@type": "Organization", name: "Bedouin Trails", logo: { "@type": "ImageObject", url: `${SITE_URL}/img/logo.png` } },
+        mainEntityOfPage: url,
+      }) }} />
       <Breadcrumbs
         items={[
           { name: t("breadcrumb_home"), url: `${SITE_URL}/` },

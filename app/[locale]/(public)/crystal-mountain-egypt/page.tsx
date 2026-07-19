@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import Breadcrumbs from "@/components/breadcrumbs/breadcrumbs";
 import styles from "@/components/guides/guides.module.scss";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 const PATH = "/crystal-mountain-egypt";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t("guide_crystal_meta_desc"),
     keywords:
       "Crystal Mountain Egypt, Crystal Mountain Western Desert, quartz crystal desert Egypt, Egypt Desert Tour, White Desert tour stops, Bahariya Oasis attractions, Western Desert Egypt landmarks, crystal ridge Egypt",
-    alternates: { canonical: url,  },
+    alternates: buildAlternates(PATH),
     openGraph: {
       title: t("guide_crystal_og_title"),
       description: t("guide_crystal_og_desc"),

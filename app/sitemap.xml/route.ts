@@ -33,12 +33,13 @@ const STATIC_PATHS = [
 interface SitemapEntry {
   path: string;
   lastModified: Date;
+  changefreq: string;
+  priority: string;
 }
 
 function buildEntry(locale: string, entry: SitemapEntry): string {
   const isHome = entry.path === "/";
   const url = `${SITE_URL}/${locale}${isHome ? "" : entry.path}`;
-  const priority = isHome ? "1.0" : "0.9";
   const lastmod = entry.lastModified.toISOString();
 
   const alternates = locales
@@ -53,10 +54,18 @@ function buildEntry(locale: string, entry: SitemapEntry): string {
   return `  <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
-    <priority>${priority}</priority>
+    <changefreq>${entry.changefreq}</changefreq>
+    <priority>${entry.priority}</priority>
 ${alternates}
 ${xDefault}
   </url>`;
+}
+
+function staticPriority(path: string): { priority: string; changefreq: string } {
+  if (path === "/") return { priority: "1.0", changefreq: "daily" };
+  if (path === "/journeys" || path === "/blogs") return { priority: "0.9", changefreq: "daily" };
+  if (path === "/about" || path === "/contact" || path === "/faq") return { priority: "0.7", changefreq: "monthly" };
+  return { priority: "0.6", changefreq: "monthly" };
 }
 
 export async function GET() {
@@ -76,16 +85,21 @@ export async function GET() {
   const staticEntries: SitemapEntry[] = STATIC_PATHS.map((path) => ({
     path,
     lastModified: now,
+    ...staticPriority(path),
   }));
 
   const tripEntries: SitemapEntry[] = traps.map((trap) => ({
     path: `/journeys/${trap.slug}`,
     lastModified: trap.updatedAt,
+    changefreq: "weekly",
+    priority: "0.8",
   }));
 
   const blogEntries: SitemapEntry[] = blogs.map((blog) => ({
     path: `/blogs/${blog.slug}`,
     lastModified: blog.updatedAt,
+    changefreq: "weekly",
+    priority: "0.7",
   }));
 
   const allEntries = [...staticEntries, ...tripEntries, ...blogEntries];

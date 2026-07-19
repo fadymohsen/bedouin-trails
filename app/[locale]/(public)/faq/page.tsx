@@ -8,7 +8,7 @@ import PageHero from "@/components/page-hero/page-hero";
 import FaqAccordionMulti from "@/components/faq-page/faq-accordion-multi";
 import styles from "@/components/faq-page/faq-page.module.scss";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const url = `${SITE_URL}/faq`;
   return {
     title, description,
-    alternates: { canonical: url },
+    alternates: buildAlternates("/faq"),
     openGraph: { title, description, url, images: [`${SITE_URL}/og-image.jpg`] },
     twitter: { card: "summary_large_image", title, description, images: [`${SITE_URL}/og-image.jpg`] },
   };

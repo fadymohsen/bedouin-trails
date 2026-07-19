@@ -5,7 +5,7 @@ import SafeImage from "@/components/safe-image/safe-image";
 import Breadcrumbs from "@/components/breadcrumbs/breadcrumbs";
 import styles from "./blogs.module.scss";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL } from "@/lib/seo";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type I18nJson = Record<string, string> | any;
