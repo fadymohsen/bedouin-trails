@@ -28,6 +28,9 @@ type BlogDetail = {
   contentAr: string;
   contentI18n?: I18nJson;
   image: string | null;
+  author?: string;
+  publishedAt?: Date | null;
+  updatedAt?: Date;
   faqs?: BlogFaqItem[];
 };
 
@@ -58,11 +61,14 @@ export default function BlogLayout({
     description: currentTitle,
     image: current.image ?? `${SITE_URL}/og-image.jpg`,
     url: currentUrl,
+    author: { "@type": "Person", name: current.author || "Bedouin Trails Team" },
     publisher: {
       "@type": "Organization",
       name: "Bedouin Trails",
       logo: { "@type": "ImageObject", url: `${SITE_URL}/img/logo.png` },
     },
+    ...(current.publishedAt ? { datePublished: new Date(current.publishedAt).toISOString() } : {}),
+    ...(current.updatedAt ? { dateModified: new Date(current.updatedAt).toISOString() } : {}),
     mainEntityOfPage: currentUrl,
   };
 

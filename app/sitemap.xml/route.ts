@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { locales, defaultLocale } from "@/lib/i18n/config";
 
 const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bedouintrails.com"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com"
 ).replace(/\/+$/, "");
 
 const STATIC_PATHS = [

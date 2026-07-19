@@ -1,7 +1,7 @@
 import { locales } from "@/lib/i18n/config";
 
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bedouintrails.com"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com"
 ).replace(/\/+$/, "");
 
 export function buildAlternates(path: string) {
