@@ -28,6 +28,10 @@ const STATIC_PATHS = [
   "/stargazing-western-desert",
   "/crystal-mountain-egypt",
   "/desert-safety-guide",
+  "/egypt-safari-tours",
+  "/white-desert-camping",
+  "/multi-day-desert-trek",
+  "/bahariya-oasis",
 ];
 
 interface SitemapEntry {
