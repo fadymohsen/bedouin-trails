@@ -163,42 +163,7 @@
   }
 
   @media (max-width: 768px) {
-    background: transparent;
-    padding: 0;
-
-    h2 {
-      margin-bottom: 16px;
-      padding-left: 8px;
-    }
-
-    .article-links {
-      flex-direction: row;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding: 4px 8px 16px 8px;
-      gap: 12px;
-      -webkit-overflow-scrolling: touch;
-      
-      &::-webkit-scrollbar {
-        display: none;
-      }
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    .link-item {
-      flex: 0 0 280px;
-      scroll-snap-align: start;
-      background: fr.$surface-2;
-      padding: 16px 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-      &.active {
-        border-inline-start: none;
-        border-bottom: 3px solid fr.$brand-primary;
-        background: fr.$surface-3;
-      }
-    }
+    display: none;
   }
 
   h2 {
