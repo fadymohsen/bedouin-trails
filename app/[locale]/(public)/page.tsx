@@ -4,6 +4,7 @@ import { FaArrowRight, FaInstagram, FaCompass, FaBoxOpen, FaMapMarkedAlt } from 
 import { getTranslations, getLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import type { Locale } from "@/lib/i18n/config";
+import { localize } from "@/lib/i18n/localized";
 import { mapTrapForCard } from "@/lib/mappers/trap";
 import { mapSliderForHero, mapBlogForHomeSection, mapFaq, mapAboutUs, mapReviewForTestimonial } from "@/lib/mappers/misc";
 import SafeImage from "@/components/safe-image/safe-image";
@@ -87,7 +88,9 @@ export default async function HomePage() {
   const homeFaqs = faqs.map((f) => mapFaq(f, locale));
   const historyEntries = aboutUsEntries.map((entry) => mapAboutUs(entry, locale));
   const testimonial = topReview ? mapReviewForTestimonial(topReview) : null;
-  const spotlightName = spotlightTrap ? (locale === "ar" ? spotlightTrap.nameAr ?? spotlightTrap.nameEn : spotlightTrap.nameEn) : null;
+  const spotlightName = spotlightTrap
+    ? localize(spotlightTrap.nameEn, spotlightTrap.nameAr, locale, spotlightTrap.nameI18n)
+    : null;
   const spotlightImages = spotlightTrap?.galleries.map((g) => g.image) ?? [];
 
   const organizationJsonLd = {
