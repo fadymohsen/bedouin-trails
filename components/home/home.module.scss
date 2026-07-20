@@ -594,13 +594,18 @@
   line-height: fr.$display-line;
   text-transform: uppercase;
   max-width: fr.$section-max-width;
-  margin: 0 auto;
+  // No space separated this from the three cards below it — heading and
+  // subheadings ran together with zero gap.
+  margin: 0 auto l.$space-8;
+
+  @include l.md-down {
+    margin-bottom: l.$space-7;
+  }
 
   .accent {
     color: fr.$brand-primary;
     display: block;
   }
-
 }
 
 .historyGrid {

@@ -853,7 +853,7 @@
                         }
 
                         .image-wrapper {
-                            height: 220px;
+                            aspect-ratio: 16 / 10;
                             border-radius: 18px;
                             margin-bottom: 20px;
                         }
@@ -945,7 +945,7 @@
                             }
 
                             .image-wrapper {
-                                height: 160px;
+                                aspect-ratio: 16 / 10;
                                 border-radius: 15px;
                             }
 
@@ -987,7 +987,7 @@
                 .journeyDesCard {
                     .step-card {
                         .image-wrapper {
-                            height: 180px;
+                            aspect-ratio: 16 / 10;
                         }
 
                         .content {

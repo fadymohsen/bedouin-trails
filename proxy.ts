@@ -6,7 +6,7 @@ import { locales, defaultLocale, isLocale } from "./lib/i18n/config";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-const USER_PROTECTED_PREFIXES = ["/my-journeys", "/book", "/profile"];
+const USER_PROTECTED_PREFIXES = ["/my-journeys", "/profile"];
 const ADMIN_COOKIE = "admin_session";
 const USER_COOKIE = "session";
 
