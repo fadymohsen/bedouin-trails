@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import I18nField from "./i18n-field";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 import styles from "./admin.module.scss";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,7 +95,7 @@ export default function BlogForm({
 
       <div className={styles.field}>
         <label>Cover image {initial && "(leave empty to keep current)"}</label>
-        {initial?.image && <img src={initial.image} alt="" className={styles.imagePreview} />}
+        {initial?.image && <img src={getLocalFallbackImage(initial.image)} alt="" className={styles.imagePreview} />}
         <input type="file" name="image" accept="image/*" />
       </div>
 

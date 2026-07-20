@@ -23,18 +23,28 @@ type ActionState = { success?: boolean; error?: string } | undefined;
 
 export async function createArticleAction(_prevState: unknown, form: FormData): Promise<ActionState> {
   await requireAdmin("manage_website");
-  const input = formToArticleInput(form);
-  const imageFile = form.get("image");
-  const article = await createArticle(input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+  let articleId: number;
+  try {
+    const input = formToArticleInput(form);
+    const imageFile = form.get("image");
+    const article = await createArticle(input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+    articleId = article.id;
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Failed to save. Please try again." };
+  }
   revalidatePath("/admin/articles");
-  redirect(`/admin/articles/${article.id}`);
+  redirect(`/admin/articles/${articleId}`);
 }
 
 export async function updateArticleAction(articleId: number, _prevState: unknown, form: FormData): Promise<ActionState> {
   await requireAdmin("manage_website");
-  const input = formToArticleInput(form);
-  const imageFile = form.get("image");
-  await updateArticle(articleId, input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+  try {
+    const input = formToArticleInput(form);
+    const imageFile = form.get("image");
+    await updateArticle(articleId, input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Failed to save. Please try again." };
+  }
   revalidatePath("/admin/articles");
   revalidatePath(`/admin/articles/${articleId}`);
   return { success: true };

@@ -9,6 +9,7 @@ import {
   deleteTrapDayCardAction,
 } from "@/app/admin/(dashboard)/trips/actions";
 import I18nField from "./i18n-field";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 import styles from "./admin.module.scss";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,22 +39,29 @@ function CardForm({
   onDone: () => void;
 }) {
   const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
+    setError(null);
     startTransition(async () => {
-      if (card) {
-        await updateTrapDayCardAction(tripId, card.id, form);
-      } else {
-        await addTrapDayCardAction(tripId, dayId, form);
+      try {
+        if (card) {
+          await updateTrapDayCardAction(tripId, card.id, form);
+        } else {
+          await addTrapDayCardAction(tripId, dayId, form);
+        }
+        onDone();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to save. Please try again.");
       }
-      onDone();
     });
   }
 
   return (
     <form onSubmit={handleSubmit} className={styles.form} style={{ maxWidth: "100%" }}>
+      {error && <div className={styles.errorBanner}>{error}</div>}
       <I18nField
         name="title"
         label="Title"
@@ -86,6 +94,18 @@ function DayCard({ tripId, day }: { tripId: number; day: TripDay }) {
   const [pending, startTransition] = useTransition();
   const [adding, setAdding] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  function run(action: () => Promise<void>) {
+    setError(null);
+    startTransition(async () => {
+      try {
+        await action();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Action failed. Please try again.");
+      }
+    });
+  }
 
   return (
     <div className={styles.card}>
@@ -95,7 +115,7 @@ function DayCard({ tripId, day }: { tripId: number; day: TripDay }) {
           className={styles.dangerBtn}
           onClick={() => {
             if (confirm(`Delete day ${day.dayNumber} and all its cards?`)) {
-              startTransition(() => deleteTrapDayAction(tripId, day.id));
+              run(() => deleteTrapDayAction(tripId, day.id));
             }
           }}
           disabled={pending}
@@ -104,12 +124,14 @@ function DayCard({ tripId, day }: { tripId: number; day: TripDay }) {
         </button>
       </div>
 
+      {error && <div className={styles.errorBanner}>{error}</div>}
+
       {day.cards.map((card) =>
         editingId === card.id ? (
           <CardForm key={card.id} tripId={tripId} dayId={day.id} card={card} onDone={() => setEditingId(null)} />
         ) : (
           <div key={card.id} style={{ display: "flex", gap: 12, alignItems: "center", padding: "10px 0", borderBottom: "1px solid #eee" }}>
-            {card.image && <img src={card.image} alt="" className={styles.thumb} />}
+            {card.image && <img src={getLocalFallbackImage(card.image)} alt="" className={styles.thumb} />}
             <div style={{ flex: 1 }}>
               <strong>{card.titleEn}</strong>
               <p style={{ margin: 0, fontSize: "0.85rem", color: "#777" }}>{card.descriptionEn}</p>
@@ -119,7 +141,7 @@ function DayCard({ tripId, day }: { tripId: number; day: TripDay }) {
             </button>
             <button
               className={styles.dangerBtn}
-              onClick={() => startTransition(() => deleteTrapDayCardAction(tripId, card.id))}
+              onClick={() => run(() => deleteTrapDayCardAction(tripId, card.id))}
               disabled={pending}
             >
               Delete

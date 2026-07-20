@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import I18nField from "./i18n-field";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 import styles from "./admin.module.scss";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,7 +65,7 @@ export default function ArticleForm({
       {initial?.image && (
         <div className={styles.field}>
           <label>Current image</label>
-          <img src={initial.image} alt="" className={styles.imagePreview} />
+          <img src={getLocalFallbackImage(initial.image)} alt="" className={styles.imagePreview} />
         </div>
       )}
 

@@ -21,21 +21,31 @@ type ActionState = { success?: boolean; error?: string } | undefined;
 
 export async function createSliderAction(_prevState: unknown, form: FormData): Promise<ActionState> {
   await requireAdmin("manage_website");
-  const input = formToSliderInput(form);
-  const imageFile = form.get("image");
-  if (!(imageFile instanceof File) || imageFile.size === 0) {
-    throw new Error("Image is required.");
+  let sliderId: number;
+  try {
+    const input = formToSliderInput(form);
+    const imageFile = form.get("image");
+    if (!(imageFile instanceof File) || imageFile.size === 0) {
+      return { error: "Image is required." };
+    }
+    const slider = await createSlider(input, imageFile);
+    sliderId = slider.id;
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Failed to save. Please try again." };
   }
-  const slider = await createSlider(input, imageFile);
   revalidatePath("/admin/sliders");
-  redirect(`/admin/sliders/${slider.id}`);
+  redirect(`/admin/sliders/${sliderId}`);
 }
 
 export async function updateSliderAction(sliderId: number, _prevState: unknown, form: FormData): Promise<ActionState> {
   await requireAdmin("manage_website");
-  const input = formToSliderInput(form);
-  const imageFile = form.get("image");
-  await updateSlider(sliderId, input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+  try {
+    const input = formToSliderInput(form);
+    const imageFile = form.get("image");
+    await updateSlider(sliderId, input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Failed to save. Please try again." };
+  }
   revalidatePath("/admin/sliders");
   revalidatePath(`/admin/sliders/${sliderId}`);
   return { success: true };

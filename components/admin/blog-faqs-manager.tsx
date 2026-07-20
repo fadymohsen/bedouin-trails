@@ -20,22 +20,29 @@ export type BlogFaqItem = {
 
 function FaqForm({ blogId, faq, onDone }: { blogId: number; faq?: BlogFaqItem; onDone: () => void }) {
   const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
+    setError(null);
     startTransition(async () => {
-      if (faq) {
-        await updateBlogFaqAction(blogId, faq.id, form);
-      } else {
-        await addBlogFaqAction(blogId, form);
+      try {
+        if (faq) {
+          await updateBlogFaqAction(blogId, faq.id, form);
+        } else {
+          await addBlogFaqAction(blogId, form);
+        }
+        onDone();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to save. Please try again.");
       }
-      onDone();
     });
   }
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
+      {error && <div className={styles.errorBanner}>{error}</div>}
       <I18nField
         name="question"
         label="Question"
@@ -64,9 +71,22 @@ export default function BlogFaqsManager({ blogId, faqs }: { blogId: number; faqs
   const [pending, startTransition] = useTransition();
   const [adding, setAdding] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  function handleDelete(faqId: number) {
+    setError(null);
+    startTransition(async () => {
+      try {
+        await deleteBlogFaqAction(blogId, faqId);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Delete failed. Please try again.");
+      }
+    });
+  }
 
   return (
     <div className={styles.card}>
+      {error && <div className={styles.errorBanner}>{error}</div>}
       {faqs.map((faq) =>
         editingId === faq.id ? (
           <FaqForm key={faq.id} blogId={blogId} faq={faq} onDone={() => setEditingId(null)} />
@@ -80,11 +100,7 @@ export default function BlogFaqsManager({ blogId, faqs }: { blogId: number; faqs
               <button className={styles.secondaryBtn} onClick={() => setEditingId(faq.id)}>
                 Edit
               </button>
-              <button
-                className={styles.dangerBtn}
-                onClick={() => startTransition(() => deleteBlogFaqAction(blogId, faq.id))}
-                disabled={pending}
-              >
+              <button className={styles.dangerBtn} onClick={() => handleDelete(faq.id)} disabled={pending}>
                 Delete
               </button>
             </div>

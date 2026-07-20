@@ -34,18 +34,28 @@ function formToBlogInput(form: FormData) {
 
 export async function createBlogAction(_prevState: unknown, form: FormData): Promise<ActionState> {
   await requireAdmin("manage_website");
-  const input = formToBlogInput(form);
-  const imageFile = form.get("image");
-  const blog = await createBlog(input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+  let blogId: number;
+  try {
+    const input = formToBlogInput(form);
+    const imageFile = form.get("image");
+    const blog = await createBlog(input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+    blogId = blog.id;
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Failed to save. Please try again." };
+  }
   revalidatePath("/admin/blogs");
-  redirect(`/admin/blogs/${blog.id}`);
+  redirect(`/admin/blogs/${blogId}`);
 }
 
 export async function updateBlogAction(blogId: number, _prevState: unknown, form: FormData): Promise<ActionState> {
   await requireAdmin("manage_website");
-  const input = formToBlogInput(form);
-  const imageFile = form.get("image");
-  await updateBlog(blogId, input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+  try {
+    const input = formToBlogInput(form);
+    const imageFile = form.get("image");
+    await updateBlog(blogId, input, imageFile instanceof File && imageFile.size > 0 ? imageFile : null);
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Failed to save. Please try again." };
+  }
   revalidatePath("/admin/blogs");
   revalidatePath(`/admin/blogs/${blogId}`);
   return { success: true };
