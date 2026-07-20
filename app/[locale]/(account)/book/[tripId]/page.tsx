@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { localize } from "@/lib/i18n/localized";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 import type { Locale } from "@/lib/i18n/config";
 import BookFormClient from "@/components/book-form/book-form-client";
 
@@ -28,7 +29,7 @@ export default async function BookTripPage({ params }: { params: Promise<{ tripI
   const trip = {
     id: trap.id,
     name: localize(trap.nameEn, trap.nameAr, locale),
-    image: trap.galleries[0]?.image ?? null,
+    image: getLocalFallbackImage(trap.galleries[0]?.image ?? null),
     description: localize(trap.descriptionEn ?? "", trap.descriptionAr, locale) || null,
   };
 

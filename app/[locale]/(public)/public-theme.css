@@ -35,20 +35,28 @@
   font-family: var(--font-dm-sans), sans-serif;
 }
 
-.site-public h1,
-.site-public h1 *,
-.site-public h2,
-.site-public h2 *,
-.site-public h3,
-.site-public h3 *,
-.site-public h4,
-.site-public h4 *,
-.site-public h5,
-.site-public h5 *,
-.site-public h6,
-.site-public h6 *,
-.site-public .display,
-.site-public .display * {
+/* :where() keeps this whole selector list at zero specificity. Without it,
+   ".site-public h2" (a class + an element) outranks every plain single-class
+   component selector like ".historyHeading" — so no component could ever
+   override this margin/color, no matter what it set or how the stylesheets
+   were ordered. */
+:where(.site-public)
+  :where(
+    h1,
+    h1 *,
+    h2,
+    h2 *,
+    h3,
+    h3 *,
+    h4,
+    h4 *,
+    h5,
+    h5 *,
+    h6,
+    h6 *,
+    .display,
+    .display *
+  ) {
   font-family: var(--font-tanker), sans-serif !important;
   color: var(--text-heading);
   font-weight: 400;
@@ -89,13 +97,13 @@
   line-height: 1.35em;
 }
 
-.site-public p {
+:where(.site-public) :where(p) {
   font-size: 1rem; /* 16px, Body */
   line-height: 1.6em;
   margin: 0 0 1rem 0;
 }
 
-.site-public p:last-child {
+:where(.site-public) :where(p:last-child) {
   margin-bottom: 0;
 }
 
