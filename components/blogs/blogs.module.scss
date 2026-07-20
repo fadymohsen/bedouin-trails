@@ -148,6 +148,23 @@
         margin-bottom: 10px;
       }
     }
+
+    // Used by existing published blog content (e.g. "Bedouin Trails Tip"
+    // call-outs) but had no matching rule, so it rendered as a bare,
+    // undecorated div.
+    .callout {
+      background: fr.$surface-2;
+      border-inline-start: 3px solid fr.$brand-primary;
+      border-radius: fr.$radius;
+      padding: fr.$gap-sm fr.$gap-md;
+      margin-bottom: fr.$gap-sm;
+      color: fr.$text-body-muted;
+      font-family: fr.$font-body;
+
+      strong {
+        color: fr.$text-heading;
+      }
+    }
   }
 }
 
