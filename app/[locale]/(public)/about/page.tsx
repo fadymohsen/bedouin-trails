@@ -11,7 +11,7 @@ import PageHero from "@/components/page-hero/page-hero";
 import ScrollReveal from "@/components/scroll-reveal/scroll-reveal";
 import styles from "@/components/about/about.module.scss";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `${SITE_URL}/about` },
+    alternates: buildAlternates("/about"),
     openGraph: { title, description, url: `${SITE_URL}/about`, images: [`${SITE_URL}/og-image.jpg`] },
     twitter: { card: "summary_large_image", title, description, images: [`${SITE_URL}/og-image.jpg`] },
   };
@@ -36,8 +36,25 @@ export default async function AboutPage() {
   ]);
   const aboutData = entries.map((entry) => mapAboutUs(entry, locale));
 
+  const aboutJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: t("meta_title_about"),
+    description: t("meta_desc_about"),
+    url: `${SITE_URL}/about`,
+    mainEntity: {
+      "@type": "TravelAgency",
+      name: "Bedouin Trails",
+      url: SITE_URL,
+      logo: `${SITE_URL}/img/logo.png`,
+      address: { "@type": "PostalAddress", addressCountry: "EG", addressLocality: "Cairo" },
+      contactPoint: { "@type": "ContactPoint", telephone: "+20-10-02717380", contactType: "reservations", availableLanguage: ["English", "Arabic"] },
+    },
+  };
+
   return (
     <div className={styles.aboutPage}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }} />
       <Breadcrumbs
         items={[
           { name: "Home", url: `${SITE_URL}/` },

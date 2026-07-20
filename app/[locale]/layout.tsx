@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/i18n/config";
 import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -15,18 +16,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
-
-  const alternates: Record<string, string> = {};
-  for (const loc of routing.locales) {
-    alternates[loc] = `${baseUrl}/${loc}`;
-  }
 
   return {
-    alternates: {
-      canonical: `${baseUrl}/${locale}`,
-      languages: alternates,
-    },
+    alternates: buildAlternates(`/`),
   };
 }
 

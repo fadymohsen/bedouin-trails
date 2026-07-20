@@ -14,11 +14,14 @@ import FaqAccordion from "@/components/faq-accordion/faq-accordion";
 import ScrollReveal from "@/components/scroll-reveal/scroll-reveal";
 import styles from "@/components/home/home.module.scss";
 
+import { SITE_URL, buildAlternates } from "@/lib/seo";
+
 export async function generateMetadata() {
   const t = await getTranslations();
   return {
     title: t("meta_title_home"),
     description: t("meta_desc_home"),
+    alternates: buildAlternates("/"),
   };
 }
 
@@ -91,9 +94,9 @@ export default async function HomePage() {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
     name: "Bedouin Trails",
-    url: "https://bedouintrails.com",
-    logo: "https://bedouintrails.com/img/logo.png",
-    image: "https://bedouintrails.com/og-image.jpg",
+    url: SITE_URL,
+    logo: `${SITE_URL}/img/logo.png`,
+    image: `${SITE_URL}/og-image.jpg`,
     description:
       "Egyptian desert safari tour company based in Cairo, organizing White Desert safari tours, camel treks, desert trekking, and multi-day desert tours.",
     address: {
@@ -115,6 +118,7 @@ export default async function HomePage() {
 
   return (
     <main className={styles.home}>
+      <h1 className="sr-only">{t("meta_title_home")}</h1>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -165,7 +169,7 @@ export default async function HomePage() {
                 <div className={styles.grainOverlay} />
               </div>
               <div className={styles.pillSmall}>
-                <Image src="/img/adventure1.webp" alt="Group dancing near Elephant Rock" width={300} height={400} />
+                <Image src="/img/salt-lake.webp" alt="Tourists floating in a crystal-clear salt lake in Egypt's Western Desert" width={300} height={400} />
                 <div className={styles.grainOverlay} />
               </div>
             </div>

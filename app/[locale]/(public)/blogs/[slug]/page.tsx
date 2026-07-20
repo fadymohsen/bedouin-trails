@@ -7,7 +7,7 @@ import { localize } from "@/lib/i18n/localized";
 import type { Locale } from "@/lib/i18n/config";
 import BlogLayout from "@/components/blogs/blog-layout";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 
 async function loadBlog(slug: string) {
   try {
@@ -36,7 +36,7 @@ export async function generateMetadata({
   return {
     title: `${metaTitle} | Bedouin Trails`,
     description: metaDescription,
-    alternates: { canonical: url,  },
+    alternates: buildAlternates(`/blogs/${slug}`),
     openGraph: {
       title: metaTitle,
       description: metaDescription,

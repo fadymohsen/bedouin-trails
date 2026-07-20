@@ -17,7 +17,7 @@ import TripCarousel from "@/components/carousel/trip-carousel";
 import Card from "@/components/card/card";
 import styles from "@/components/trip-detail/trip-detail.module.scss";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 
 async function loadTrip(slug: string) {
   try {
@@ -47,9 +47,7 @@ export async function generateMetadata({
     description:
       trip.metaDescription ||
       `${name} - ${localize(trip.interfaceFromEn, trip.interfaceFromAr, locale, trip.interfaceFromI18n)} → ${localize(trip.interfaceToEn, trip.interfaceToAr, locale, trip.interfaceToI18n)}. Book your spot now | Bedouin Trails`,
-    alternates: {
-      canonical: url,
-    },
+    alternates: buildAlternates(`/journeys/${slug}`),
     openGraph: {
       title: trip.metaTitle || name,
       description: trip.metaDescription || name,

@@ -8,7 +8,7 @@ export default function Footer() {
   const t = useTranslations();
 
   return (
-    <div className={styles.footer} id="contact">
+    <footer className={styles.footer} id="contact">
       <div className={styles.mountainDivider} />
       <div className={styles.wrap}>
         <Link href="/" className={styles.footerLogoRowCentered}>
@@ -88,6 +88,6 @@ export default function Footer() {
           <p>{t("terms_privacy")}</p>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }

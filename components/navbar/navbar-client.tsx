@@ -49,7 +49,7 @@ export default function NavbarClient({ user }: { user: NavbarUser }) {
   const navDirection = isRtl(locale) ? "rtl" : "ltr";
 
   return (
-    <div className={styles.navbar}>
+    <header className={styles.navbar}>
       <div className={styles.logo}>
         <Link href="/">
           <Image src="/img/logo.png" alt="Bedouin Trails" width={50} height={50} />
@@ -113,6 +113,6 @@ export default function NavbarClient({ user }: { user: NavbarUser }) {
         {/* Profile and login button actions hidden */}
         <LanguageSwitcher />
       </div>
-    </div>
+    </header>
   );
 }

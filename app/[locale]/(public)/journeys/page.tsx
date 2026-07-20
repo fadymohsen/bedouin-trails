@@ -6,7 +6,7 @@ import type { Locale } from "@/lib/i18n/config";
 import Breadcrumbs from "@/components/breadcrumbs/breadcrumbs";
 import JourneysFilterGrid from "@/components/journeys/journeys-filter-grid";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bedouintrails.com";
+import { SITE_URL, buildAlternates } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const url = `${SITE_URL}/journeys`;
   return {
     title, description,
-    alternates: { canonical: url },
+    alternates: buildAlternates("/journeys"),
     openGraph: { title, description, url, images: [`${SITE_URL}/og-image.jpg`] },
   };
 }
