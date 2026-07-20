@@ -199,7 +199,10 @@
 
   .link-item {
     display: flex;
-    align-items: center;
+    // Titles run long in some languages and wrap to several lines in this
+    // narrow column — center-aligning left the bullet/arrow floating next
+    // to the middle of the block instead of the first line.
+    align-items: flex-start;
     gap: 10px;
     padding: 14px 16px;
     border-radius: fr.$radius;
@@ -209,6 +212,7 @@
     .bullet {
       width: 6px;
       height: 6px;
+      margin-top: 7px;
       border-radius: 50%;
       background: fr.$text-body-muted;
       flex-shrink: 0;
@@ -219,13 +223,19 @@
       font-family: fr.$font-body;
       font-size: fr.$body-small-size;
       font-weight: 600;
+      line-height: 1.4;
       color: fr.$link-unhovered;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
     }
 
     .arrow {
       flex-shrink: 0;
       width: 6px;
       height: 6px;
+      margin-top: 7px;
       border-inline-end: 2px solid fr.$text-body-muted;
       border-top: 2px solid fr.$text-body-muted;
       transform: rotate(45deg);
