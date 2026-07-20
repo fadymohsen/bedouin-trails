@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { listPublishedBlogs } from "@/lib/services/blogs";
 import type { Locale } from "@/lib/i18n/config";
 import { localize } from "@/lib/i18n/localized";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 import { Link } from "@/lib/i18n/navigation";
 import SafeImage from "@/components/safe-image/safe-image";
 import Breadcrumbs from "@/components/breadcrumbs/breadcrumbs";
@@ -66,7 +67,7 @@ export default async function BlogsIndexPage() {
               <Link href={`/blogs/${blog.slug}`} key={blog.id} className={styles["blog-card"]}>
                 <div className={styles["card-image-wrapper"]}>
                   <SafeImage
-                    src={blog.image || `/img/adventure${i % 3 === 0 ? "" : i % 3 === 1 ? "1" : "3"}.webp`}
+                    src={blog.image ? getLocalFallbackImage(blog.image) : `/img/adventure${i % 3 === 0 ? "" : i % 3 === 1 ? "1" : "3"}.webp`}
                     alt={title}
                     fill
                     style={{ objectFit: "cover" }}

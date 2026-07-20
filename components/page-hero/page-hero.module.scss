@@ -1,23 +1,24 @@
 @use "@/styles/framer-tokens" as fr;
+@use "@/styles/layout" as l;
 
 .pageHero {
   position: relative;
-  max-width: fr.$section-max-width;
-  margin: fr.$gap-sm auto 0;
+  width: 100%;
+  max-width: l.$container-max;
+  margin: l.$space-3 auto 0;
+  padding-inline: l.$gutter;
   height: 420px;
-  border-radius: fr.$radius;
+  border-radius: l.$radius-md;
   overflow: hidden;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
 
-  @media (max-width: 1400px) {
-    margin-inline: 24px;
-  }
-
-  @media (max-width: 768px) {
+  @include l.md-down {
     height: 320px;
+    padding-inline: l.$gutter-mobile;
   }
 }
 
@@ -31,7 +32,6 @@
   position: relative;
   z-index: 2;
   max-width: 720px;
-  padding: 0 8%;
 
   .eyebrow {
     display: block;
@@ -47,10 +47,6 @@
     text-transform: uppercase;
     margin: 0 0 fr.$gap-sm;
     color: fr.$text-heading;
-
-    @media (max-width: 768px) {
-      font-size: 2.4rem;
-    }
   }
 
   p {

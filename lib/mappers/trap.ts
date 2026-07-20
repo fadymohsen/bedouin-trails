@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/i18n/config";
 import { localize } from "@/lib/i18n/localized";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type I18nJson = Record<string, string> | any;
@@ -43,7 +44,7 @@ export function mapTrapForCard(trap: TrapLike, locale: Locale): TripCardData {
     interfaceTo: localize(trap.interfaceToEn, trap.interfaceToAr, locale, trap.interfaceToI18n),
     duration: trap.duration,
     countPeople: trap.countPeople,
-    image: trap.galleries?.[0]?.image ?? null,
+    image: getLocalFallbackImage(trap.galleries?.[0]?.image ?? null),
     rate: trap.rate ?? 0,
   };
 }

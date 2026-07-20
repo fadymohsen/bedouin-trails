@@ -1,29 +1,30 @@
 @use "@/styles/framer-tokens" as fr;
+@use "@/styles/layout" as l;
 
 // ---- Home hero (HeroCarousel) ----
 .heroContainer {
   position: relative;
-  margin: fr.$gap-sm auto 0;
-  max-width: fr.$section-max-width;
+  width: 100%;
+  margin: l.$space-3 auto 0;
+  max-width: l.$container-max;
+  padding-inline: l.$gutter;
   height: 720px;
   max-height: 90vh;
   overflow: hidden;
-  border-radius: fr.$radius;
+  border-radius: l.$radius-md;
   background: #000;
+  box-sizing: border-box;
 
-  @media (max-width: 1400px) {
-    margin-inline: 24px;
-  }
-
-  @media (max-width: 992px) {
+  @include l.lg-down {
     height: 560px;
   }
 
-  @media (max-width: 768px) {
+  @include l.md-down {
     height: 540px;
+    padding-inline: l.$gutter-mobile;
   }
 
-  @media (max-width: 480px) {
+  @include l.sm-down {
     height: 500px;
   }
 }
@@ -230,6 +231,8 @@
 .heroDot {
   width: 8px;
   height: 8px;
+  // globals.css forces buttons to a 44px tap target below 768px; these dots
+  // need to stay visually tiny even though they remain individually tappable.
   min-width: 0 !important;
   min-height: 0 !important;
   border-radius: 50%;

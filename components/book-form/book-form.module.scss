@@ -1,19 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap');
+// The Amiri/Cairo Google Fonts @import that used to sit here was render-blocking
+// and neither family was ever referenced — this file uses El Messiri.
+@use "@/styles/variables" as v;
+@use "@/styles/layout" as l;
 
-$primary-gold: #d4a574;
-$dark-gold: #b8925f;
-$accent-teal: #5fa9a3;
-$white: #ffffff;
-$dark-bg: #1a1a1a;
-$light-bg: #faf9f7;
-$text-dark: #2d2d2d;
-$text-light: #6b7280;
-$error-red: #dc3545;
-$success-green: #28a745;
-$border-color: #e8e5e0;
+$primary-gold: v.$gold-primary;
+$dark-gold: v.$gold-dark;
+$accent-teal: v.$gold-accent-teal;
+$white: v.$gold-white;
+$dark-bg: v.$gold-dark-bg;
+$light-bg: v.$gold-light-bg;
+$text-dark: v.$gold-text-dark;
+$text-light: v.$gold-text-light;
+$error-red: v.$gold-error;
+$success-green: v.$gold-success;
+$border-color: v.$gold-border;
 
-$font-display: 'El Messiri', serif;
-$font-body: 'El Messiri', sans-serif;
+$font-display: v.$font-display;
+$font-body: v.$font-body;
 
 // Mixins
 @mixin transition($property: all, $duration: 0.3s) {
@@ -48,23 +51,21 @@ $font-body: 'El Messiri', sans-serif;
 .book-form-split {
   display: grid;
   grid-template-columns: 45% 55%;
-  // max-width: 1400px;
   width: 100%;
-  height: 100vh;
+  // Was a hard `height: 100vh` with `overflow: hidden`, so a form taller than
+  // the viewport was cut off. `100dvh` also avoids the mobile browser-chrome
+  // jump that `100vh` causes.
+  min-height: 100dvh;
   background: $white;
   box-shadow: 0 20px 80px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
   border-radius: 0;
 
-  @media (max-width: 1024px) {
+  @include l.lg-down {
     grid-template-columns: 50% 50%;
   }
 
-  @media (max-width: 768px) {
+  @include l.md-down {
     grid-template-columns: 1fr;
-    height: auto;
-    min-height: 100vh;
-    border-radius: 20px;
   }
 }
 
@@ -93,8 +94,8 @@ $font-body: 'El Messiri', sans-serif;
 }
 
 .form-panel-inner {
-  padding: 50px 45px;
-  // max-width: 520px;
+  padding: l.$space-7 l.$space-7;
+  max-width: 560px;
   margin: 0 auto;
 
   @media (max-width: 1024px) {

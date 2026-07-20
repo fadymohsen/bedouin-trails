@@ -6,6 +6,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { getTrapBySlug } from "@/lib/services/traps";
 import { NotFoundError } from "@/lib/services/errors";
 import { localize } from "@/lib/i18n/localized";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 import { mapReviewForTestimonial } from "@/lib/mappers/misc";
 import { mapTrapForCard } from "@/lib/mappers/trap";
 import { prisma } from "@/lib/prisma";
@@ -79,8 +80,8 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
   
   const images = Array.from(
     new Set([
-      ...trip.galleries.map((g) => g.image),
-      ...trip.trapDays.flatMap((day) => day.cards.map((card) => card.image)).filter((img): img is string => img !== null),
+      ...trip.galleries.map((g) => getLocalFallbackImage(g.image)),
+      ...trip.trapDays.flatMap((day) => day.cards.map((card) => card.image)).filter((img): img is string => img !== null).map(getLocalFallbackImage),
     ])
   );
   const reviews = trip.reviews.map(mapReviewForTestimonial);
@@ -90,7 +91,7 @@ export default async function TripDetailPage({ params }: { params: Promise<{ slu
       id: card.id,
       title: localize(card.titleEn, card.titleAr, locale, card.titleI18n),
       description: localize(card.descriptionEn ?? "", card.descriptionAr, locale, card.descriptionI18n),
-      image: card.image,
+      image: getLocalFallbackImage(card.image),
     })),
   }));
 

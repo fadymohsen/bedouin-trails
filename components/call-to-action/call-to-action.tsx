@@ -25,7 +25,7 @@ export function ExperienceCTA({ onTriggerRating }: { onTriggerRating: () => void
                 onMouseEnter={() => setHover(i + 1)}
                 onMouseLeave={() => setHover(0)}
                 onClick={onTriggerRating}
-                style={{ cursor: "pointer", transition: "color 200ms", fontSize: "2.5rem" }}
+                style={{ cursor: "pointer", transition: "color 200ms" }}
               />
             ))}
           </div>

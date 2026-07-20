@@ -1,18 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap');
+// The Amiri/Cairo Google Fonts @import that used to sit here was render-blocking
+// and neither family was ever referenced — this file uses El Messiri.
+@use "@/styles/variables" as v;
+@use "@/styles/layout" as l;
 
-$primary-gold: #d4a574;
-$dark-gold: #b8925f;
-$white: #ffffff;
-$dark-bg: #1a1a1a;
-$light-bg: #faf9f7;
-$text-dark: #2d2d2d;
-$text-light: #0077FF;
-$error-red: #dc3545;
-$success-green: #28a745;
-$border-color: #e8e5e0;
+$primary-gold: v.$gold-primary;
+$dark-gold: v.$gold-dark;
+$white: v.$gold-white;
+$dark-bg: v.$gold-dark-bg;
+$light-bg: v.$gold-light-bg;
+$text-dark: v.$gold-text-dark;
+// Was #0077FF here but #6b7280 in book-form — same variable name, two meanings
+// across sibling files. Both now resolve to the shared muted grey.
+$text-light: v.$gold-text-light;
+$error-red: v.$gold-error;
+$success-green: v.$gold-success;
+$border-color: v.$gold-border;
 
-$font-display: 'El Messiri', serif;
-$font-body: 'El Messiri', sans-serif;
+$font-display: v.$font-display;
+$font-body: v.$font-body;
 
 // Mixins
 @mixin transition($property: all, $duration: 0.3s) {
@@ -294,47 +299,20 @@ $font-body: 'El Messiri', sans-serif;
             }
         }
 
-        // RTL Layout adjustments
-        html[dir="rtl"] {
-            .form-panel {
+        // These used to be `html[dir="rtl"] { … }` / `html[dir="ltr"] { … }` blocks
+        // nested here, which compiled to `.rightP html[dir=ltr]` — an <html>
+        // descendant of a div, so none of it ever applied. Logical alignment gets
+        // the same result in both directions without a direction selector.
+        .form-field {
+            text-align: start;
+
+            input,
+            textarea {
+                text-align: start;
             }
-        }
 
-        // LTR Layout (default)
-        html[dir="ltr"] {
-            .form-panel {
-                direction: ltr;
-            }
-
-            .form-field {
-                text-align: left;
-
-                input,
-                textarea {
-                    text-align: left;
-                    direction: ltr;
-                }
-
-                .field-error {
-                    text-align: left;
-                }
-            }
-        }
-
-        // Responsive Adjustments
-        @media (max-width: 768px) {
-            .book-form-split {
-                display: flex;
-                flex-direction: column;
-            }
-        }
-
-        // Accessibility
-        @media (prefers-reduced-motion: reduce) {
-            :global(*) {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .field-error {
+                text-align: start;
             }
         }
 

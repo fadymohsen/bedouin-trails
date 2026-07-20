@@ -1,5 +1,6 @@
 import { Link } from "@/lib/i18n/navigation";
 import { localize } from "@/lib/i18n/localized";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 import type { Locale } from "@/lib/i18n/config";
 import SafeImage from "@/components/safe-image/safe-image";
 import Breadcrumbs from "@/components/breadcrumbs/breadcrumbs";
@@ -59,7 +60,7 @@ export default function BlogLayout({
     "@type": "Article",
     headline: currentTitle,
     description: currentTitle,
-    image: current.image ?? `${SITE_URL}/og-image.jpg`,
+    image: `${SITE_URL}${getLocalFallbackImage(current.image)}`,
     url: currentUrl,
     author: { "@type": "Person", name: current.author || "Bedouin Trails Team" },
     publisher: {
@@ -103,16 +104,14 @@ export default function BlogLayout({
       <main className={styles["content-section"]}>
         <article>
           <div className={styles["image-container"]}>
-            {current.image && (
-              <SafeImage
-                src={current.image}
-                alt={currentTitle}
-                className={styles["header-image"]}
-                width={1200}
-                height={420}
-                style={{ objectFit: "cover" }}
-              />
-            )}
+            <SafeImage
+              src={getLocalFallbackImage(current.image)}
+              alt={currentTitle}
+              className={styles["header-image"]}
+              width={1200}
+              height={420}
+              style={{ objectFit: "cover" }}
+            />
           </div>
           <div className={styles["article-text"]}>
             <h1>{currentTitle}</h1>

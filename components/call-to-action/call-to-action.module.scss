@@ -1,9 +1,17 @@
+@use "@/styles/framer-tokens" as fr;
+@use "@/styles/layout" as l;
+
+// This file previously repeated `.experience-cta` at the top level (after the
+// nested rules) with `padding: 0`, which silently cancelled the mobile padding
+// declared inside the block and re-fought every font-size. Those duplicate
+// blocks are gone; each property is now declared once.
 .experience-cta {
   width: 100%;
-  max-width: 1200px;
-  margin: 40px auto;
-  height: 450px;
-  border-radius: 30px;
+  max-width: l.$container-max;
+  margin-inline: auto;
+  margin-block: l.$space-7;
+  min-height: 450px;
+  border-radius: l.$radius-lg;
   overflow: hidden;
   position: relative;
   background: url('/img/bg.webp') no-repeat center center;
@@ -12,210 +20,87 @@
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 1200px) {
-    height: 400px;
-    margin: 35px auto;
-    padding: 0;
+  @include l.lg-down {
+    min-height: 350px;
+    margin-block: l.$space-6;
   }
 
-  @media (max-width: 992px) {
-    height: 350px;
-    margin: 30px auto;
-    border-radius: 24px;
-    padding: 0;
-  }
-
-  @media (max-width: 768px) {
-    height: auto;
-    padding: 60px 20px;
-    margin: 25px auto;
-    border-radius: 20px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 40px 15px;
-    margin: 20px auto;
-    border-radius: 15px;
+  @include l.md-down {
+    min-height: 0;
+    margin-block: l.$space-5;
+    border-radius: l.$radius-md;
   }
 
   .cta-overlay {
-    width: 100dvw;
+    // Was 100dvw, which is wider than this max-1328px clipped parent and forced
+    // horizontal overflow on wide screens.
+    width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: l.$space-7 l.$gutter;
 
-    @media (max-width: 768px) {
-      padding: 15px;
-    }
-
-    @media (max-width: 480px) {
-      padding: 20px;
+    @include l.md-down {
+      padding: l.$space-7 l.$gutter-mobile;
     }
   }
 
   .cta-content {
     text-align: center;
-    color: #ffffff;
+    color: fr.$text-heading;
     max-width: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: l.$space-5;
 
-    @media (max-width: 768px) {
-      gap: 15px;
-      max-width: 600px;
-    }
-
-    @media (max-width: 480px) {
-      gap: 12px;
-      max-width: 100%;
-    }
-
-    .cta-title {
-      font-size: 3rem;
-      font-weight: bold;
-      margin: 0;
-      letter-spacing: 1px;
-
-      @media (max-width: 1200px) {
-        font-size: 2.5rem;
-      }
-
-      @media (max-width: 992px) {
-        font-size: 2.2rem;
-      }
-
-      @media (max-width: 768px) {
-        font-size: 1.8rem;
-      }
-
-      @media (max-width: 480px) {
-        font-size: 1.4rem;
-        letter-spacing: 0.5px;
-      }
-    }
-
-    .cta-description {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin: 0;
-      opacity: 0.9;
-
-      @media (max-width: 992px) {
-        font-size: 1rem;
-        line-height: 1.7;
-      }
-
-      @media (max-width: 768px) {
-        font-size: 0.95rem;
-        line-height: 1.6;
-      }
-
-      @media (max-width: 480px) {
-        font-size: 0.85rem;
-        line-height: 1.5;
-      }
-    }
-
-    .cta-stars {
-      display: flex;
-      gap: 8px;
-      margin: 10px 0;
-
-      @media (max-width: 480px) {
-        gap: 6px;
-        margin: 8px 0;
-      }
-
-      .star-icon {
-        color: #ffb400;
-        font-size: 1.8rem;
-
-        @media (max-width: 768px) {
-          font-size: 1.5rem;
-        }
-
-        @media (max-width: 480px) {
-          font-size: 1.2rem;
-        }
-      }
-    }
-
-    .cta-button {
-      background: transparent;
-      color: #ffffff;
-      border: 2px solid #ffffff;
-      padding: 12px 60px;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      @media (max-width: 992px) {
-        padding: 10px 50px;
-        font-size: 1.1rem;
-      }
-
-      @media (max-width: 768px) {
-        padding: 10px 40px;
-        font-size: 1rem;
-        border-radius: 45px;
-      }
-
-      @media (max-width: 480px) {
-        padding: 8px 30px;
-        font-size: 0.9rem;
-        border-radius: 40px;
-        border-width: 1.5px;
-      }
-
-      &:hover {
-        background: #ffffff;
-        color: #000000;
-        transform: scale(1.05);
-
-        @media (max-width: 768px) {
-          transform: scale(1.02);
-        }
-      }
+    @include l.md-down {
+      gap: l.$space-4;
     }
   }
-}
 
-@media (max-width: 768px) {
-  .experience-cta {
-    height: auto;
-    padding: 0;
+  .cta-title {
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
 
-    .cta-title {
-      font-size: 2rem;
-    }
+  .cta-description {
+    margin: 0;
+    opacity: 0.9;
+  }
 
-    .cta-description {
-      font-size: 1rem;
+  .cta-stars {
+    display: flex;
+    gap: l.$space-2;
+    margin-block: l.$space-2;
+
+    // Colour is set per-star inline (hover state), size belongs here.
+    .star-icon {
+      font-size: clamp(1.4rem, 4vw, 2.25rem);
     }
   }
-}
 
-@media (max-width: 480px) {
-  .experience-cta {
-    padding: 0;
+  .cta-button {
+    background: transparent;
+    color: fr.$text-heading;
+    border: 2px solid fr.$text-heading;
+    padding: l.$space-3 l.$space-7;
+    border-radius: l.$radius-pill;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 
-    .cta-title {
-      font-size: 1.5rem;
+    &:hover {
+      background: fr.$text-heading;
+      color: fr.$surface-1;
+      transform: scale(1.03);
     }
 
-    .cta-description {
-      font-size: 0.9rem;
-    }
-
-    .cta-button {
-      padding: 10px 35px;
-      font-size: 0.95rem;
+    @include l.md-down {
+      padding: l.$space-3 l.$space-6;
     }
   }
 }

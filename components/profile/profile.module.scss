@@ -1,7 +1,9 @@
 .profilePage {
     background-color: #ffffff;
     min-height: 100vh;
-    width: 100vw;
+    // 100vw includes the vertical scrollbar gutter, which forced a horizontal
+    // scrollbar that `overflow-x: hidden` below was only masking.
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -25,18 +27,15 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            padding: clamp(20px, 1.5vh, 15px) 3%;
+            // clamp() min must be <= max; the previous clamp(20px, 1.5vh, 15px)
+            // had them inverted, so the 1.5vh preferred value never applied.
+            padding: clamp(12px, 1.5vh, 20px) 3%;
             width: 100%;
             position: absolute;
             top: 0;
             left: 0;
             z-index: 100;
             direction: ltr;
-            @media(max-with:480px) {
-                width: 90% !important;
-                padding: clamp(20px, 1.5vh, 15px) 3%;
-
-            }
 
 
             .text {
@@ -470,10 +469,12 @@
 
                     &.disabled {
 
+                        // `border-color: none` is invalid and was being dropped, so a
+                        // disabled field still showed the focus border colour.
                         input:focus {
-                            border-color: none !important;
-                            background: none !important;
-                            box-shadow: none !important;
+                            border-color: inherit;
+                            background: none;
+                            box-shadow: none;
                         }
                     }
                 }
@@ -735,8 +736,11 @@
         }
 
         .closeBtn {
-            right: 0px !important;
-            left: 0px !important;
+            // Setting both right and left pinned the button to the start edge in LTR
+            // regardless of intent. One logical inset keeps it on the trailing edge
+            // in both directions.
+            inset-inline-end: 0;
+            inset-inline-start: auto;
             width: 30px;
             display: flex;
             justify-content: center;
@@ -873,27 +877,12 @@
     }
 }
 
-@media (max-width: 480px) {
-    .profilePage {
-        .coverHeader {
-            min-height: 130px;
-
-           
-        }
-
-        .pageBody {
-            .imageContainer {
-                width: 120px;
-                height: 120px;
-                margin-top: -60px;
-            }
-
-            .actionButtons {
-                max-width: 100%;
-            }
-        }
-    }
-
+// NOTE: everything below used to sit inside an `@media (max-width: 480px)` block
+// that was never closed until the end of the file. That made all of these base
+// styles phone-only, and turned the nested 768px/600px/500px blocks further down
+// into `(max-width: 480px) and (max-width: 768px)` — so tablet layout never
+// applied at all. The wrapper is gone; the phone-specific rules it was supposed
+// to hold live in the 480px block below.
 
     .imageInfo {
         text-align: center;
@@ -1027,41 +1016,6 @@
         @media (max-width: 500px) {
             flex-direction: column;
             gap: 15px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .profilePage {
-            .coverHeader {
-                height: 20vh;
-                min-height: 150px;
-
-                .card_nav {
-                    padding: clamp(20px, 1.5vh, 15px) 5%;
-
-                    .text {
-                        font-size: 14px;
-                        padding: 10px 18px;
-                    }
-                }
-            }
-
-            .pageBody {
-                padding: 0 15px 40px;
-
-                .mainTitle {
-                    font-size: 24px;
-                    margin-bottom: 30px;
-                }
-
-                .formGrid {
-                    gap: 20px;
-
-                    .nameRow {
-                        gap: 20px;
-                    }
-                }
-            }
         }
     }
 
@@ -1334,4 +1288,3 @@
             }
         }
     }
-}

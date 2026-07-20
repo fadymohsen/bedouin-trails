@@ -1,4 +1,5 @@
 @use "@/styles/framer-tokens" as fr;
+@use "@/styles/layout" as l;
 
 .footer {
   width: 100%;
@@ -16,15 +17,15 @@
   width: 100%;
   max-width: fr.$section-max-width;
   margin: 0 auto;
-  padding: fr.$gap-lg 24px 0px 24px;
+  padding: l.$space-7 l.$gutter 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: fr.$gap-lg;
+  gap: l.$space-7;
 
-  @media (max-width: 900px) {
-    padding: 24px 16px 0px 16px;
-    gap: fr.$gap-md;
+  @include l.md-down {
+    padding: l.$space-6 l.$gutter-mobile 0;
+    gap: l.$space-5;
   }
 }
 
@@ -32,11 +33,11 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1.3fr;
-  gap: fr.$gap-md;
+  gap: l.$space-7;
 
-  @media (max-width: 900px) {
+  @include l.md-down {
     grid-template-columns: 1fr 1fr;
-    gap: fr.$gap-sm;
+    gap: l.$space-5;
     text-align: start;
   }
 }
@@ -44,15 +45,15 @@
 .col {
   display: flex;
   flex-direction: column;
-  gap: fr.$gap-sm;
+  gap: l.$space-3;
 
-  @media (max-width: 900px) {
+  @include l.md-down {
     align-items: center;
     text-align: center;
 
     &:last-child {
       grid-column: span 2;
-      margin-top: 16px;
+      margin-top: l.$space-4;
     }
   }
 }
@@ -62,14 +63,14 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  margin-bottom: fr.$gap-md;
+  margin-bottom: l.$space-5;
 
   img {
-    width: 160px;
-    height: 160px;
+    width: 120px;
+    height: 120px;
   }
 
-  @media (max-width: 768px) {
+  @include l.md-down {
     display: flex;
   }
 }
@@ -77,9 +78,9 @@
 .footerLogoRow {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: l.$space-2;
   text-decoration: none;
-  margin-bottom: fr.$gap-sm;
+  margin-bottom: l.$space-3;
 
   img {
     width: 40px;
@@ -97,7 +98,7 @@
 .footerMenu {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: l.$space-3;
 
   a {
     font-family: fr.$font-body;
@@ -133,13 +134,13 @@
 .contactLinks {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: fr.$gap-sm;
+  gap: l.$space-3;
+  margin-top: l.$space-3;
 
   a {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: l.$space-2;
     font-family: fr.$font-body;
     font-size: fr.$body-small-size;
     font-weight: 600;
@@ -147,7 +148,7 @@
     text-decoration: none;
     transition: color 0.2s ease;
 
-    @media (max-width: 900px) {
+    @include l.md-down {
       justify-content: center;
     }
 
@@ -161,7 +162,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: l.$space-2;
   flex-wrap: wrap;
 }
 
@@ -185,7 +186,7 @@
 
 .copyrights {
   width: 100%;
-  padding: 16px 0;
+  padding: l.$space-4 0;
   border-top: 1px solid hsla(0, 0%, 100%, 0.08);
   text-align: center;
 
@@ -208,6 +209,6 @@
   color: hsla(0, 0%, 100%, 0.05);
   white-space: nowrap;
   user-select: none;
-  padding-bottom: 8px;
+  padding-bottom: l.$space-5;
   text-transform: uppercase;
 }

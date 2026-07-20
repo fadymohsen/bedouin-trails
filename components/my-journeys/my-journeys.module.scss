@@ -1,62 +1,32 @@
+@use "@/styles/layout" as l;
+
+// The container had no max-width (it was commented out) and no horizontal
+// padding above 480px, so cards ran edge-to-edge on desktop and tablet.
 .cards-container {
     display: grid;
-    gap: 2rem;
-    padding: 0px 0px 20px;
+    gap: l.$space-6;
     width: 100%;
-    // max-width: 1400px;
-    margin: 0 auto;
+    max-width: l.$container-max;
+    margin-inline: auto;
+    padding-inline: l.$gutter;
+    padding-block: l.$space-7 l.$space-6;
 
-    @media (max-width: 1200px) {
-        gap: 25px;
-        padding: 0px 0px 15px;
-    }
-
-    @media (max-width: 992px) {
-        gap: 20px;
-        padding: 0px 0px 10px;
-        width: 100%;
-    }
-
-    @media (max-width: 768px) {
-        gap: 15px;
-        padding: 0px 0px 20px;
-        width:100%;
-    }
-
-    @media (max-width: 480px) {
-        gap: 12px;
-        padding:0px 10px;
-        width:100%;
+    @include l.md-down {
+        gap: l.$space-5;
+        padding-inline: l.$gutter-mobile;
+        padding-block: l.$space-6 l.$space-5;
     }
 
     h1 {
         grid-column: 1 / -1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: clamp(32px, 5vw, 72px);
-        margin-bottom: 40px;
+        text-align: center;
+        font-size: clamp(28px, 5vw, 56px);
+        margin-bottom: l.$space-7;
         color: #333;
         font-weight: 800;
-        text-align: center;
 
-        @media (max-width: 1200px) {
-            margin-bottom: 35px;
-        }
-
-        @media (max-width: 992px) {
-            margin-bottom: 30px;
-            font-size: clamp(28px, 4vw, 56px);
-        }
-
-        @media (max-width: 768px) {
-            margin-bottom: 25px;
-            font-size: clamp(24px, 3.5vw, 44px);
-        }
-
-        @media (max-width: 480px) {
-            margin-bottom: 20px;
-            font-size: clamp(20px, 3vw, 32px);
+        @include l.md-down {
+            margin-bottom: l.$space-6;
         }
     }
 }
@@ -72,34 +42,38 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 60px 20px;
+    padding: l.$space-8 l.$space-5;
     background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    margin-top: 20px;
+    border-radius: l.$radius-md;
+    box-shadow: l.$shadow-md;
+    margin-top: l.$space-5;
+
+    @include l.md-down {
+        padding: l.$space-7 l.$space-4;
+    }
 
     p {
         font-size: clamp(18px, 2.5vw, 24px);
         color: #666;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: l.$space-5;
     }
 
     .no-orders-icon {
         font-size: 64px;
-        margin-bottom: 20px;
+        margin-bottom: l.$space-5;
         opacity: 0.5;
     }
 
     .browse-journeys-btn {
-        padding: 12px 32px;
+        padding: l.$space-3 l.$space-6;
         font-size: clamp(14px, 1.5vw, 18px);
         background: linear-gradient(135deg, #0B2942 0%, #1a4a6e 100%);
         color: #fff;
         border: none;
-        border-radius: 8px;
+        border-radius: l.$radius-sm;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
 
         &:hover {
             transform: translateY(-2px);
@@ -112,26 +86,12 @@
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
+    gap: l.$space-5;
     width: 100%;
 
-    @media (max-width: 1200px) {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px;
-    }
-
-    @media (max-width: 992px) {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-    }
-
-    @media (max-width: 768px) {
+    @include l.md-down {
         grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    @media (max-width: 480px) {
-        gap: 12px;
+        gap: l.$space-4;
     }
 }
 
@@ -141,14 +101,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
+    padding: l.$space-7 l.$space-5;
     background: #fff5f5;
     border: 1px solid #ffcccc;
-    border-radius: 12px;
+    border-radius: l.$radius-md;
     color: #cc0000;
     font-size: clamp(16px, 2vw, 20px);
     text-align: center;
-    margin-top: 20px;
+    margin-top: l.$space-5;
 }
 
 .loading-container {
@@ -157,7 +117,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 80px 20px;
+    padding: l.$space-9 l.$space-5;
 
     .loader {
         width: 50px;
@@ -166,7 +126,7 @@
         border-top: 4px solid #0B294352;
         border-radius: 50%;
         animation: spin 1s linear infinite;
-        margin-bottom: 20px;
+        margin-bottom: l.$space-5;
     }
 
     p {

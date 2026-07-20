@@ -1,87 +1,90 @@
+@use "@/styles/framer-tokens" as fr;
+@use "@/styles/layout" as l;
+
+// Shared by the 14 SEO guide pages. This used to be a light-theme sheet
+// (white background, #333 body copy, yellow accent) dropped into the dark
+// public site, and it hardcoded its own font stack, container width and
+// percentage gutters. It now uses the same surfaces, type and rhythm as the
+// rest of the marketing pages.
 .guide-page {
-  margin-top: 1%;
-  font-family: sans-serif;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: fr.$surface-1;
+  color: fr.$text-body;
 
   .guide-hero {
     position: relative;
+    width: 100%;
+    max-width: l.$container-max;
     min-height: 420px;
-    height: 100%;
+    margin-block-end: l.$space-5;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 20px;
-    margin-bottom: 20px;
+    border-radius: l.$radius-lg;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    width: 95%;
-    color: #fff;
+    color: fr.$text-heading;
 
     &::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 60%);
-      border-radius: 20px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
+      border-radius: inherit;
     }
 
     h1 {
       position: relative;
       z-index: 2;
-      font-size: 2.4rem;
       text-align: center;
-      padding: 30px 20px;
+      padding: l.$space-6 l.$space-5;
       max-width: 800px;
-      line-height: 1.3;
     }
   }
 
   .guide-content {
+    width: 100%;
     max-width: 900px;
-    width: 90%;
-    padding: 40px 0 60px;
-    line-height: 1.8;
-    color: #333;
+    padding-block: l.$space-7 l.$space-8;
+    padding-inline: l.$gutter;
+    line-height: 1.7;
+    color: fr.$text-body;
 
     h2 {
-      font-size: 1.6rem;
-      color: #1a1a2e;
-      margin: 40px 0 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #e8c547;
+      color: fr.$text-heading;
+      margin: l.$space-7 0 l.$space-4;
+      padding-bottom: l.$space-2;
+      border-bottom: 2px solid fr.$brand-primary;
     }
 
     h3 {
-      font-size: 1.25rem;
-      color: #2d2d44;
-      margin: 28px 0 12px;
+      color: fr.$text-heading;
+      margin: l.$space-6 0 l.$space-3;
     }
 
     p {
-      margin-bottom: 16px;
-      font-size: 1.05rem;
+      margin-bottom: l.$space-4;
     }
 
-    ul, ol {
-      margin: 16px 0;
-      padding-left: 24px;
+    ul,
+    ol {
+      margin: l.$space-4 0;
+      padding-inline-start: l.$space-5;
 
       li {
-        margin-bottom: 10px;
-        font-size: 1.05rem;
+        margin-bottom: l.$space-2;
       }
     }
 
     .highlight-box {
-      background: #f7f3e3;
-      border-left: 4px solid #e8c547;
-      padding: 20px 24px;
-      border-radius: 0 12px 12px 0;
-      margin: 24px 0;
+      background: fr.$surface-2;
+      border-inline-start: 4px solid fr.$brand-primary;
+      padding: l.$space-5;
+      border-radius: 0 l.$radius-md l.$radius-md 0;
+      margin: l.$space-5 0;
 
       p {
         margin-bottom: 0;
@@ -91,55 +94,50 @@
 
     .cta-section {
       text-align: center;
-      padding: 40px 0;
+      padding: l.$space-7 0;
 
       .cta-button {
         display: inline-block;
-        background: #e8c547;
-        color: #1a1a2e;
-        padding: 14px 36px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 1.1rem;
-        transition: background 0.3s;
+        background: fr.$brand-primary;
+        color: fr.$text-heading;
+        padding: l.$space-3 l.$space-6;
+        border-radius: l.$radius-pill;
+        font-weight: 600;
+        transition: background 0.3s ease;
 
         &:hover {
-          background: #d4b23e;
+          background: fr.$brand-primary-hovered;
+          color: fr.$text-heading;
         }
       }
     }
 
     .faq-section {
-      margin-top: 40px;
+      margin-top: l.$space-7;
 
       .faq-item {
-        margin-bottom: 16px;
+        margin-bottom: l.$space-4;
 
         h3 {
-          margin-bottom: 6px;
+          margin-bottom: l.$space-2;
         }
       }
     }
   }
 
-  @media (max-width: 768px) {
+  @include l.md-down {
     .guide-hero {
       min-height: 300px;
+      border-radius: l.$radius-md;
 
       h1 {
-        font-size: 1.6rem;
-        padding: 20px 16px;
+        padding: l.$space-5 l.$space-4;
       }
     }
 
     .guide-content {
-      width: 92%;
-      padding: 24px 0 40px;
-
-      h2 {
-        font-size: 1.35rem;
-      }
+      padding-block: l.$space-6 l.$space-7;
+      padding-inline: l.$gutter-mobile;
     }
   }
 }

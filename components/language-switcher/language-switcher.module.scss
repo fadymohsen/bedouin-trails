@@ -1,3 +1,6 @@
+@use "@/styles/framer-tokens" as fr;
+@use "@/styles/layout" as l;
+
 .globeButton {
   background: none;
   border: none;
@@ -6,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: fr.$text-heading;
   transition: opacity 0.3s ease;
 
   &:hover {
@@ -23,15 +26,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: l.$gutter;
   animation: fadeIn 0.2s ease;
 }
 
 .modal {
   position: relative;
-  background: #2a2e1e;
-  border-radius: 16px;
-  padding: 40px;
+  background: fr.$surface-1;
+  border-radius: l.$radius-md;
+  padding: l.$space-7;
   width: 100%;
   max-width: 560px;
   max-height: 85vh;
@@ -43,19 +46,19 @@
     font-weight: 400;
     font-size: 1.75rem;
     color: #fff;
-    margin: 0 0 24px;
+    margin: 0 0 l.$space-5;
     text-align: center;
   }
 
-  @media (max-width: 600px) {
-    padding: 28px 20px;
+  @include l.md-down {
+    padding: l.$space-6 l.$space-5;
   }
 }
 
 .closeButton {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: l.$space-4;
+  inset-inline-end: l.$space-4;
   background: rgba(255, 255, 255, 0.08);
   border: none;
   color: #fff;
@@ -76,9 +79,9 @@
 .languageGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: l.$space-3;
 
-  @media (max-width: 480px) {
+  @include l.sm-down {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -87,9 +90,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 18px 12px;
-  border-radius: 12px;
+  gap: l.$space-2;
+  padding: l.$space-4 l.$space-3;
+  border-radius: l.$radius-md;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
   cursor: pointer;
@@ -100,7 +103,7 @@
   }
 
   &.active {
-    border-color: rgb(233, 75, 23);
+    border-color: fr.$brand-primary;
     background: rgba(233, 75, 23, 0.12);
   }
 }
@@ -109,13 +112,12 @@
   width: 40px;
   height: 28px;
   object-fit: cover;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: l.$space-1;
+  box-shadow: l.$shadow-sm;
 }
 
 .langName {
-  font-family: sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #fff;
   text-align: center;

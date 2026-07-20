@@ -1,14 +1,26 @@
-$primary: #cf9050;
+@use "@/styles/variables" as v;
+@use "@/styles/layout" as l;
+
+// These were four near-miss duplicates of the shared palette (#cf9050 is the
+// accent _variables.scss documents as replaced by $brand-primary).
+$primary: v.$brand-primary;
+$primary-hover: v.$brand-primary-hover;
 $dark: #1e1e1e;
-$border: #e5e5e5;
-$bg: #f7f6f4;
-$danger: #d9534f;
-$success: #2e8b57;
+$border: v.$brand-border;
+$bg: v.$gold-light-bg;
+$danger: v.$gold-error;
+$success: v.$gold-success;
 
 .shell {
   display: flex;
   min-height: 100vh;
   background: $bg;
+
+  // The 240px sidebar never collapsed, leaving ~55px of usable content width on
+  // a phone. Below 768px it becomes a horizontal nav strip above the content.
+  @include l.md-down {
+    flex-direction: column;
+  }
 }
 
 .sidebar {
@@ -16,20 +28,39 @@ $success: #2e8b57;
   flex-shrink: 0;
   background: #fff;
   border-right: 1px solid $border;
-  padding: 24px 16px;
+  padding: l.$space-5 l.$space-4;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: l.$space-1;
+
+  @include l.md-down {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: l.$space-2;
+    border-right: none;
+    border-bottom: 1px solid $border;
+    padding: l.$space-3 l.$gutter-mobile;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
 }
 
 .sidebarLogo {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 8px 20px;
+  padding: 0 l.$space-2 l.$space-5;
   font-weight: 700;
+  white-space: nowrap;
   font-size: 1.1rem;
   color: $dark;
+
+  @include l.md-down {
+    padding: 0 l.$space-2 0 0;
+  }
 
   img {
     width: 32px;
@@ -38,11 +69,12 @@ $success: #2e8b57;
 }
 
 .navLink {
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: l.$space-2 l.$space-3;
+  border-radius: l.$radius-sm;
   color: #444;
   font-size: 0.92rem;
   font-weight: 500;
+  white-space: nowrap;
   transition: background 0.15s, color 0.15s;
 
   &:hover {
@@ -60,23 +92,41 @@ $success: #2e8b57;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #999;
-  padding: 16px 12px 4px;
+  padding: l.$space-4 l.$space-3 l.$space-1;
+
+  // The group headings only make sense in the vertical sidebar.
+  @include l.md-down {
+    display: none;
+  }
 }
 
 .logoutForm {
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: l.$space-3;
   border-top: 1px solid $border;
+
+  @include l.md-down {
+    margin-top: 0;
+    margin-inline-start: auto;
+    padding-top: 0;
+    border-top: none;
+    flex-shrink: 0;
+  }
 }
 
 .logoutBtn {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: l.$space-2 l.$space-3;
+  border-radius: l.$radius-sm;
+  white-space: nowrap;
   background: transparent;
   color: #999;
   font-size: 0.9rem;
-  text-align: left;
+  text-align: start;
+
+  @include l.md-down {
+    width: auto;
+  }
 
   &:hover {
     background: #fdecea;
@@ -86,17 +136,22 @@ $success: #2e8b57;
 
 .main {
   flex: 1;
-  padding: 32px 40px;
+  min-width: 0;
+  padding: l.$space-6 l.$space-7;
   overflow-x: auto;
+
+  @include l.md-down {
+    padding: l.$space-5 l.$gutter-mobile;
+  }
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: l.$space-5;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: l.$space-3;
 }
 
 .title {
@@ -116,7 +171,7 @@ $success: #2e8b57;
   transition: background 0.15s;
 
   &:hover {
-    background: #b87d3f;
+    background: $primary-hover;
   }
 
   &:disabled {
@@ -157,23 +212,27 @@ $success: #2e8b57;
 .card {
   background: #fff;
   border: 1px solid $border;
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 20px;
+  border-radius: l.$radius-md;
+  padding: l.$space-5;
+  margin-bottom: l.$space-5;
+
+  @include l.md-down {
+    padding: l.$space-4;
+  }
 }
 
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
+  gap: l.$space-4;
+  margin-bottom: l.$space-6;
 }
 
 .statCard {
   background: #fff;
   border: 1px solid $border;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: l.$radius-md;
+  padding: l.$space-5;
 
   h3 {
     font-size: 2rem;
@@ -195,8 +254,8 @@ $success: #2e8b57;
 
   th,
   td {
-    text-align: left;
-    padding: 12px 14px;
+    text-align: start;
+    padding: l.$space-3 l.$space-4;
     border-bottom: 1px solid $border;
     vertical-align: middle;
   }
@@ -235,7 +294,7 @@ $success: #2e8b57;
 
 .emptyState {
   text-align: center;
-  padding: 60px 20px;
+  padding: l.$space-8 l.$space-5;
   color: #999;
 }
 
@@ -249,9 +308,9 @@ $success: #2e8b57;
 .formRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: l.$space-4;
 
-  @media (max-width: 600px) {
+  @include l.sm-down {
     grid-template-columns: 1fr;
   }
 }
@@ -270,11 +329,13 @@ $success: #2e8b57;
   input,
   textarea,
   select {
-    padding: 10px 12px;
+    padding: l.$space-3;
     border: 1px solid $border;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border-radius: l.$radius-sm;
+    // 16px keeps iOS from zooming the viewport on focus.
+    font-size: 16px;
     font-family: inherit;
+    min-height: 44px;
 
     &:focus {
       outline: none;

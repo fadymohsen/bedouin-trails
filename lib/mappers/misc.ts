@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/i18n/config";
 import { localize } from "@/lib/i18n/localized";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 import type { HeroSlide } from "@/components/carousel/hero-carousel";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,7 +18,7 @@ type SliderLike = {
 
 export function mapSliderForHero(slider: SliderLike, locale: Locale): HeroSlide {
   return {
-    image: slider.image,
+    image: getLocalFallbackImage(slider.image),
     title: localize(slider.titleEn ?? "", slider.titleAr, locale, slider.titleI18n),
     description: localize(slider.descriptionEn ?? "", slider.descriptionAr, locale, slider.descriptionI18n),
   };
@@ -50,7 +51,7 @@ export function mapBlogForHomeSection(blog: BlogLike, locale: Locale) {
     slug: blog.slug,
     title,
     description,
-    image: blog.image,
+    image: getLocalFallbackImage(blog.image),
   };
 }
 
@@ -70,7 +71,7 @@ export function mapAboutUs(entry: AboutUsLike, locale: Locale) {
     id: entry.id,
     title: localize(entry.titleEn, entry.titleAr, locale, entry.titleI18n),
     description: localize(entry.descriptionEn, entry.descriptionAr, locale, entry.descriptionI18n),
-    image: entry.image,
+    image: getLocalFallbackImage(entry.image),
   };
 }
 
@@ -85,7 +86,7 @@ export function mapReviewForTestimonial(review: ReviewLike) {
   return {
     id: review.id,
     userName: `${review.user.firstName} ${review.user.lastName}`.trim(),
-    userImage: review.user.image,
+    userImage: getLocalFallbackImage(review.user.image),
     stars: review.stars,
     comment: review.comment,
   };

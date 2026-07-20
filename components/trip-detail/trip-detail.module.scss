@@ -83,14 +83,12 @@
         grid-template-columns: 8fr 4fr;
         justify-content: space-between;
         align-items: start;
-        direction: ltr !important;
         box-sizing: border-box;
 
         .stepper {
             position: relative;
             padding: 28px 24px 36px;
             width: 100%;
-            min-width: 40dvw;
 
             &__track {
                 position: absolute;
@@ -107,7 +105,7 @@
                 position: relative;
                 z-index: 1;
                 display: flex;
-                flex-direction: row-reverse;
+                flex-direction: row;
                 justify-content: space-between;
                 align-items: center; // ← change from flex-start to center
 
@@ -528,7 +526,9 @@
         }
 
         .day-item:hover {
-            background-color: rgba(212, 163, 115, 0.1);
+            // Was an orphan gold (#d4a374) not in the token file — the day strip
+            // sits on fr.$surface-1, so hover uses a tint of the real accent.
+            background-color: rgba(233, 75, 23, 0.1);
         }
 
         .day-item.active-day {
@@ -583,43 +583,13 @@
                 }
             }
 
-            .calendar-strip {
+            // The day strip renders as .days-strip > .day-item > .day-label/.day-number
+            // (see trip-day-viewer.tsx). An older .days-strip/.day-item/.day-label
+            // copy used to live here and matched nothing; its base styles are already
+            // covered above, so it is gone and the responsive rules below now target
+            // the real class names.
+            .days-strip {
                 direction: ltr;
-                display: flex;
-                background-color: fr.$surface-2;
-                padding: 10px 30px;
-                border-radius: 15px;
-                gap: 40px;
-                flex-grow: 1;
-                justify-content: center;
-
-                .date-item {
-                    text-align: center;
-                    position: relative;
-
-                    .day-name {
-                        font-size: 14px;
-                        color: fr.$text-body-muted;
-                        margin-bottom: 8px;
-                    }
-
-                    .day-number {
-                        font-size: 18px;
-                        font-weight: bold;
-                        color: fr.$text-heading;
-                    }
-
-                    &.active::after {
-                        content: '';
-                        position: absolute;
-                        bottom: -15px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        border-left: 6px solid transparent;
-                        border-right: 6px solid transparent;
-                        border-bottom: 8px solid fr.$brand-primary;
-                    }
-                }
             }
 
             /* ── Tablet (≤ 1024px) ── */
@@ -673,12 +643,12 @@
                         /* Chrome / Safari */
                     }
 
-                    .date-item {
+                    .day-item {
                         flex: 0 0 auto;
                         /* prevent shrinking */
                         padding: 0 10px;
 
-                        .day-name {
+                        .day-label {
                             font-size: 12px;
                         }
 
@@ -761,7 +731,7 @@
         }
 
         @media (max-width: 1200px) {
-            .part-2 {
+            & {
                 padding: 35px 20px;
 
                 h1 {
@@ -779,7 +749,7 @@
                         padding: 12px 20px;
                     }
 
-                    .calendar-strip {
+                    .days-strip {
                         gap: 30px;
                         padding: 8px 25px;
                     }
@@ -793,7 +763,7 @@
         }
 
         @media (max-width: 992px) {
-            .part-2 {
+            & {
                 padding: 30px 15px;
 
                 h1 {
@@ -811,7 +781,7 @@
                         padding: 15px;
                     }
 
-                    .calendar-strip {
+                    .days-strip {
                         order: -1;
                         padding: 10px;
                         gap: 25px;
@@ -827,7 +797,7 @@
         }
 
         @media (max-width: 768px) {
-            .part-2 {
+            & {
                 padding: 25px 12px;
 
                 h1 {
@@ -853,8 +823,8 @@
                         padding: 8px 15px;
                         border-radius: 12px;
 
-                        .date-item {
-                            .day-name {
+                        .day-item {
+                            .day-label {
                                 font-size: 13px;
                             }
 
@@ -905,7 +875,7 @@
         }
 
         @media (max-width: 576px) {
-            .part-2 {
+            & {
                 padding: 20px 10px;
 
                 h1 {
@@ -934,8 +904,8 @@
                         justify-content: center;
                         overflow: visible;
 
-                        .date-item {
-                            .day-name {
+                        .day-item {
+                            .day-label {
                                 font-size: 12px;
                                 margin-bottom: 6px;
                             }
@@ -989,7 +959,7 @@
         }
 
         @media (max-width: 400px) {
-            .part-2 {
+            & {
                 padding: 15px 8px;
 
                 h1 {
@@ -998,12 +968,12 @@
                 }
 
                 .dates-container {
-                    .calendar-strip {
+                    .days-strip {
                         gap: 10px;
                         padding: 5px 8px;
 
-                        .date-item {
-                            .day-name {
+                        .day-item {
+                            .day-label {
                                 font-size: 11px;
                             }
 
@@ -1074,7 +1044,7 @@
         }
 
         @media (max-height: 500px) and (orientation: landscape) {
-            .part-2 {
+            & {
                 .journeyDesCard {
                     grid-template-columns: repeat(2, 1fr);
                     gap: 15px;

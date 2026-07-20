@@ -1,6 +1,20 @@
+@use "@/styles/framer-tokens" as fr;
+@use "@/styles/layout" as l;
+
+// Renders on the dark public pages. The previous colours (#cf9050 — the accent
+// that _variables.scss documents as replaced — plus #999/#666 on a #2a2e1e
+// background) were both off-brand and close to unreadable.
 .breadcrumbs {
-  padding: 12px 24px;
-  font-size: 0.85rem;
+  width: 100%;
+  max-width: l.$container-max;
+  margin-inline: auto;
+  padding-block: l.$space-3;
+  padding-inline: l.$gutter;
+  font-size: 0.875rem;
+
+  @include l.md-down {
+    padding-inline: l.$gutter-mobile;
+  }
 
   ol {
     display: flex;
@@ -8,7 +22,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 4px;
+    gap: l.$space-1;
   }
 
   li {
@@ -17,21 +31,21 @@
 
     &:not(:last-child)::after {
       content: "›";
-      margin-inline: 6px;
-      color: #999;
+      margin-inline: l.$space-2;
+      color: fr.$text-body-muted;
     }
   }
 
   a {
-    color: #cf9050;
-    text-decoration: none;
+    color: fr.$brand-primary;
 
     &:hover {
+      color: fr.$brand-primary;
       text-decoration: underline;
     }
   }
 
   span[aria-current="page"] {
-    color: #666;
+    color: fr.$text-body-muted;
   }
 }

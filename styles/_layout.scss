@@ -1,0 +1,108 @@
+// Shared spacing / breakpoint / elevation scale.
+//
+// Before this file the codebase ran two competing spacing scales side by side —
+// a 4-based one (8/12/16/24/48) and a 5-based one (10/15/20/25/30/35/50/60) — plus
+// 24 distinct @media widths. Everything below collapses those into one scale so
+// section rhythm and gutters line up across pages instead of drifting per component.
+//
+// Values are anchored to the Framer capture in _framer-tokens.scss
+// ($section-max-width / $section-padding / $gap-*), which is the source of truth.
+
+// ---- Spacing scale (4px base) ----
+$space-0: 0;
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+$space-7: 48px;
+$space-8: 64px;
+$space-9: 84px; // matches $section-padding vertical
+$space-10: 96px; // matches $gap-xl
+
+// Migration map for the 5-based values that were scattered through the modules:
+//   5px  -> $space-1   10px -> $space-2   15px -> $space-4   18px -> $space-4
+//   25px -> $space-5   30px -> $space-6   35px -> $space-6   40px -> $space-7
+//   50px -> $space-7   60px -> $space-8   80px -> $space-9
+
+// ---- Container ----
+$container-max: 1328px; // = $section-max-width
+$gutter: 24px; // desktop horizontal page gutter
+$gutter-mobile: 16px;
+
+// ---- Section vertical rhythm ----
+$section-y: 84px;
+$section-y-tablet: 64px;
+$section-y-mobile: 48px;
+
+// ---- Radius ----
+$radius-sm: 8px;
+$radius-md: 12px; // = $radius in _framer-tokens.scss
+$radius-lg: 20px;
+$radius-pill: 999px;
+
+// ---- Elevation ----
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.16);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.18);
+$shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.22);
+
+// ---- Breakpoints ----
+// Only these four. Anything else that showed up before (900/992/576/620/...) maps
+// to the nearest one here.
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+@mixin sm-down {
+  @media (max-width: $bp-sm) {
+    @content;
+  }
+}
+
+@mixin md-down {
+  @media (max-width: $bp-md) {
+    @content;
+  }
+}
+
+@mixin lg-down {
+  @media (max-width: $bp-lg) {
+    @content;
+  }
+}
+
+@mixin xl-down {
+  @media (max-width: $bp-xl) {
+    @content;
+  }
+}
+
+// ---- Composites ----
+
+// Centered content column with responsive gutters. Replaces the ~15 hand-rolled
+// `max-width: 1200px; margin: 0 auto; padding: 0 20px` blocks.
+@mixin container($max: $container-max) {
+  width: 100%;
+  max-width: $max;
+  margin-inline: auto;
+  padding-inline: $gutter;
+
+  @include md-down {
+    padding-inline: $gutter-mobile;
+  }
+}
+
+// Top-level page section vertical rhythm.
+@mixin section-rhythm {
+  padding-block: $section-y;
+
+  @include lg-down {
+    padding-block: $section-y-tablet;
+  }
+
+  @include md-down {
+    padding-block: $section-y-mobile;
+  }
+}

@@ -1,4 +1,5 @@
 @use "@/styles/framer-tokens" as fr;
+@use "@/styles/layout" as l;
 
 .home {
   background: fr.$surface-1;
@@ -12,7 +13,7 @@
   align-items: flex-end;
   max-width: fr.$section-max-width;
   margin: 0 auto;
-  padding: fr.$section-padding;
+  padding: l.$section-y l.$gutter;
   padding-bottom: fr.$gap-md;
   gap: fr.$gap-md;
 
@@ -22,9 +23,6 @@
     text-transform: uppercase;
     margin: 0;
 
-    @media (max-width: 768px) {
-      font-size: 2.4rem;
-    }
   }
 }
 
@@ -53,10 +51,10 @@
 .adventuresCta {
   display: flex;
   justify-content: center;
-  padding: 0 24px fr.$gap-xl;
+  padding: l.$section-y l.$gutter;
 
   @media (max-width: 768px) {
-    padding-bottom: 48px;
+    padding-block: l.$section-y-mobile;
   }
 }
 
@@ -91,7 +89,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0;
-    padding: 24px 12px;
+    padding: l.$space-5 l.$gutter-mobile;
   }
 }
 
@@ -149,13 +147,13 @@
   gap: fr.$gap-md;
   max-width: fr.$section-max-width;
   margin: 0 auto;
-  padding: 0 24px fr.$gap-xl;
+  padding: l.$section-y l.$gutter;
 
-  @media (max-width: 992px) {
+  @media (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 }
@@ -166,21 +164,21 @@
   grid-template-columns: auto 1fr;
   align-items: center;
   max-width: fr.$section-max-width;
-  margin: 0 auto fr.$gap-xl;
-  padding: fr.$section-padding;
+  margin: 0 auto;
+  padding: l.$section-y l.$gutter;
   gap: fr.$gap-lg;
   background: fr.$surface-2;
   border-radius: fr.$radius;
 
-  @media (max-width: 992px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     gap: fr.$gap-md;
-    padding: 48px 24px;
+    padding: l.$section-y-tablet l.$gutter;
     margin-bottom: 48px;
   }
 
   @media (max-width: 768px) {
-    padding: 32px 16px;
+    padding: l.$section-y-mobile l.$gutter-mobile;
     margin-bottom: 48px;
   }
 }
@@ -333,10 +331,10 @@
 .spotlightSection {
   max-width: fr.$section-max-width;
   margin: 0 auto;
-  padding: 0 24px fr.$gap-xl;
+  padding: l.$section-y l.$gutter;
 
   @media (max-width: 768px) {
-    padding-bottom: 48px;
+    padding-block: l.$section-y-mobile;
   }
 }
 
@@ -344,7 +342,7 @@
   position: relative;
   background: fr.$surface-2;
   border-radius: fr.$radius;
-  padding: 96px 24px;
+  padding: l.$section-y l.$gutter;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -352,8 +350,8 @@
   gap: fr.$gap-sm;
   overflow: hidden;
 
-  @media (max-width: 640px) {
-    padding: 64px 20px;
+  @media (max-width: 768px) {
+    padding: l.$section-y-mobile l.$gutter-mobile;
   }
 }
 
@@ -369,9 +367,6 @@
   text-transform: uppercase;
   margin: 0;
 
-  @media (max-width: 768px) {
-    font-size: 2.4rem;
-  }
 }
 
 .spotlightMeta {
@@ -411,7 +406,7 @@
     transform: rotate(7deg);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     display: none;
   }
 }
@@ -423,14 +418,14 @@
   gap: fr.$gap-sm;
   max-width: fr.$section-max-width;
   margin: 0 auto;
-  padding: 0 24px fr.$gap-xl;
+  padding: l.$section-y l.$gutter;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
   @media (max-width: 768px) {
-    padding-bottom: 48px;
+    padding-block: l.$section-y-mobile;
   }
 }
 
@@ -472,7 +467,7 @@
 .testimonialSection {
   max-width: 900px;
   margin: 0 auto;
-  padding: fr.$section-padding;
+  padding: l.$section-y l.$gutter;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -480,7 +475,7 @@
   gap: fr.$gap-md;
 
   @media (max-width: 768px) {
-    padding: 48px 16px;
+    padding: l.$section-y-mobile l.$gutter-mobile;
   }
 }
 
@@ -517,10 +512,10 @@
   gap: fr.$gap-lg;
   max-width: fr.$section-max-width;
   margin: 0 auto;
-  padding: fr.$section-padding;
+  padding: l.$section-y l.$gutter;
 
   @media (max-width: 768px) {
-    padding: 48px 16px;
+    padding: l.$section-y-mobile l.$gutter-mobile;
     gap: fr.$gap-md;
   }
 
@@ -531,9 +526,6 @@
     margin: 0;
     text-align: center;
 
-    @media (max-width: 768px) {
-      font-size: 2.4rem;
-    }
   }
 }
 
@@ -543,7 +535,7 @@
   gap: fr.$gap-lg;
   width: 100%;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     gap: fr.$gap-md;
   }
@@ -588,11 +580,11 @@
 }
 // ---- History / purpose (about-us entries) ----
 .historySection {
-  padding: fr.$section-padding;
+  padding: l.$section-y l.$gutter;
   padding-top: 0;
 
   @media (max-width: 768px) {
-    padding: 0 16px 48px;
+    padding: l.$section-y-mobile l.$gutter-mobile;
   }
 }
 
@@ -602,16 +594,13 @@
   line-height: fr.$display-line;
   text-transform: uppercase;
   max-width: fr.$section-max-width;
-  margin: 0 auto fr.$gap-xl !important;
+  margin: 0 auto;
 
   .accent {
     color: fr.$brand-primary;
     display: block;
   }
 
-  @media (max-width: 768px) {
-    font-size: 2.4rem;
-  }
 }
 
 .historyGrid {
@@ -621,7 +610,7 @@
   max-width: fr.$section-max-width;
   margin: 0 auto;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
   }
 }
@@ -661,11 +650,11 @@
 .journalSection {
   max-width: fr.$section-max-width;
   margin: 0 auto;
-  padding: fr.$section-padding;
+  padding: l.$section-y l.$gutter;
   padding-top: 0;
 
   @media (max-width: 768px) {
-    padding: 0 16px 48px;
+    padding: l.$section-y-mobile l.$gutter-mobile;
   }
 }
 
@@ -694,7 +683,7 @@
     border-radius: fr.$radius;
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 }
@@ -736,10 +725,10 @@
 .faqSection {
   max-width: 900px;
   margin: 0 auto;
-  padding: fr.$section-padding;
+  padding: l.$section-y l.$gutter;
 
   @media (max-width: 768px) {
-    padding: 48px 16px;
+    padding: l.$section-y-mobile l.$gutter-mobile;
   }
 
   h2 {
@@ -749,9 +738,6 @@
     text-transform: uppercase;
     margin: 0 0 fr.$gap-lg;
 
-    @media (max-width: 768px) {
-      font-size: 2.4rem;
-    }
   }
 }
 
@@ -775,7 +761,8 @@
 
     &.active {
       .faq-answer {
-        max-height: 500px;
+        // Long answers (and RTL, which runs taller) were clipped at 500px.
+      max-height: 200vh;
         opacity: 1;
         visibility: visible;
         padding-bottom: 20px;
@@ -831,7 +818,10 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     .answer-content {
-      padding: 0 24px 10px 58px;
+      // Icon column width, so the answer lines up under the question text
+      // instead of a hand-computed 58px that also got dropped on mobile.
+      padding-block: 0 l.$space-2;
+      padding-inline: calc(#{l.$space-5} + #{l.$space-4} + 18px) l.$space-5;
 
       p {
         font-family: fr.$font-body;
@@ -854,7 +844,7 @@
     }
 
     .faq-answer .answer-content {
-      padding: 0 1rem 1.25rem;
+      padding-inline: calc(#{l.$space-4} + #{l.$space-4} + 18px) l.$space-4;
     }
   }
 
@@ -875,7 +865,7 @@
 .socialSection {
   max-width: fr.$section-max-width;
   margin: 0 auto;
-  padding: fr.$section-padding;
+  padding: l.$section-y l.$gutter;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -883,7 +873,7 @@
   text-align: center;
 
   @media (max-width: 768px) {
-    padding: 48px 16px;
+    padding: l.$section-y-mobile l.$gutter-mobile;
   }
 }
 
@@ -893,7 +883,7 @@
   gap: fr.$gap-sm;
   width: 100%;
 
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
 
     & > :last-child {

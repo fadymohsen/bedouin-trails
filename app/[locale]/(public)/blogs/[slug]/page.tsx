@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { listPublishedBlogs, getBlogBySlug } from "@/lib/services/blogs";
 import { NotFoundError } from "@/lib/services/errors";
 import { localize } from "@/lib/i18n/localized";
+import { getLocalFallbackImage } from "@/lib/image-fallback";
 import type { Locale } from "@/lib/i18n/config";
 import BlogLayout from "@/components/blogs/blog-layout";
 
@@ -40,7 +41,7 @@ export async function generateMetadata({
     openGraph: {
       title: metaTitle,
       description: metaDescription,
-      images: blog.image ? [blog.image] : [`${SITE_URL}/og-image.jpg`],
+      images: [`${SITE_URL}${getLocalFallbackImage(blog.image)}`],
       url,
       type: "article",
     },
@@ -48,7 +49,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: metaTitle,
       description: metaDescription,
-      images: blog.image ? [blog.image] : [`${SITE_URL}/og-image.jpg`],
+      images: [`${SITE_URL}${getLocalFallbackImage(blog.image)}`],
     },
   };
 }

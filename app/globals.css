@@ -9,7 +9,18 @@
 * {
   font-family: "El Messiri", sans-serif;
   box-sizing: border-box;
+}
+
+/* Keyboard focus stays visible; only the mouse-click ring is suppressed.
+   The previous blanket `* { outline: none }` removed it for keyboard users too. */
+:focus:not(:focus-visible) {
   outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 html {
@@ -121,8 +132,11 @@ a {
 }
 
 @media (max-width: 768px) {
+  /* Tap targets apply to actual controls only. This used to include a bare `a`,
+     which turned every inline link inside a paragraph into a 44px-tall
+     inline-flex box and broke text flow. */
   button,
-  a,
+  [role="button"],
   .clickable {
     min-height: 44px;
     min-width: 44px;
@@ -134,9 +148,18 @@ a {
   body {
     overflow-x: hidden;
   }
+}
 
-  * {
-    max-width: 100vw;
+/* Was declared inside booking-details.module.scss, nested under a component
+   class, so it only ever reached that component's descendants. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
