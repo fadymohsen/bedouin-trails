@@ -14,6 +14,8 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: inherit;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 
   // Matches the blog card's hover treatment; these two used to lift by
@@ -101,14 +103,6 @@
   }
   display: flex;
   flex-direction: column;
-
-  a {
-    width: 100%;
-  }
-}
-
-.detailsLink {
-  margin-top: auto;
 }
 
 .locationRow {
@@ -164,20 +158,23 @@
 }
 
 .detailsBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  margin-top: auto;
+  box-sizing: border-box;
   background-color: fr.$brand-primary;
-  border: none;
   padding: l.$space-3;
   border-radius: l.$radius-pill;
   min-height: 44px;
   font-family: fr.$font-body;
   font-weight: 600;
   color: #fff;
-  cursor: pointer;
   transition: background-color 0.2s;
   font-size: fr.$body-small-size;
 
-  &:hover {
+  .safariCard:hover & {
     background: fr.$brand-primary-hovered;
   }
 }

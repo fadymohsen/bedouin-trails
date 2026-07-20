@@ -17,7 +17,7 @@ export default function Card({ data, href }: CardProps) {
   const targetHref = href ?? `/journeys/${data.slug}`;
 
   return (
-    <div className={`${styles.safariCard} safari-card`}>
+    <Link href={targetHref} className={`${styles.safariCard} safari-card`}>
       <div className={styles.imageContainer}>
         {data.rate > 0 && (
           <div className={styles.ratingBadge}>
@@ -59,10 +59,8 @@ export default function Card({ data, href }: CardProps) {
           </div>
         </div>
 
-        <Link href={targetHref} className={styles.detailsLink}>
-          <button className={styles.detailsBtn}>{t("view_details")}</button>
-        </Link>
+        <span className={styles.detailsBtn}>{t("view_details")}</span>
       </div>
-    </div>
+    </Link>
   );
 }
